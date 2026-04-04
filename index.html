@@ -8,523 +8,74 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #FAF7F2;
-    --warm-white: #F5F0E8;
-    --ink: #1A1612;
-    --brown-soft: #6B5B4E;
-    --gold: #B8955A;
-    --gold-light: #D4AF78;
-    --separator: #E2D9CC;
-    --tag-bg: #EDE6DB;
+    --cream: #FAF7F2; --warm-white: #F5F0E8; --ink: #1A1612;
+    --brown-soft: #6B5B4E; --gold: #B8955A; --gold-light: #D4AF78;
+    --separator: #E2D9CC; --tag-bg: #EDE6DB;
   }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--cream);
-    color: var(--ink);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-  }
-
-  /* ── GRAIN OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 999; opacity: 0.4;
-  }
-
-  /* ── HEADER ── */
-  header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px 24px 40px;
-    border-bottom: 1px solid var(--separator);
-    position: relative;
-  }
-
-  .cross-icon {
-    width: 28px; height: 28px;
-    margin-bottom: 18px;
-    opacity: 0.7;
-    animation: fadein 1.2s ease both;
-  }
-
-  .site-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    animation: fadein 1.4s ease both;
-  }
-
-  .site-subtitle {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--brown-soft);
-    margin-top: 8px;
-    animation: fadein 1.6s ease both;
-  }
-
-  .site-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--gold);
-    margin-top: 10px;
-    letter-spacing: 0.03em;
-    animation: fadein 1.8s ease both;
-  }
-
-  /* ── FEATURED / HERO CARD ── */
-  .hero-section {
-    max-width: 780px;
-    margin: 64px auto 0;
-    padding: 0 24px;
-    animation: slideup 1s ease both 0.3s;
-  }
-
-  .label-today {
-    font-size: 0.68rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .label-today::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--gold-light);
-    opacity: 0.5;
-  }
-
-  .hero-card {
-    background: var(--warm-white);
-    border: 1px solid var(--separator);
-    border-radius: 2px;
-    padding: 52px 56px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-card::before {
-    content: '\201C';
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14rem;
-    color: var(--gold);
-    opacity: 0.07;
-    position: absolute;
-    top: -30px; left: 20px;
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .hero-verse {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.35rem, 3vw, 1.75rem);
-    line-height: 1.65;
-    color: var(--ink);
-    margin-bottom: 14px;
-  }
-
-  .hero-ref {
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 36px;
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-    font-weight: 600;
-    line-height: 1.25;
-    margin-bottom: 22px;
-    color: var(--ink);
-  }
-
-  .hero-body {
-    font-size: 0.95rem;
-    line-height: 1.9;
-    color: #3D342C;
-    margin-bottom: 32px;
-  }
-
-  .hero-body p + p { margin-top: 14px; }
-
-  .hero-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--separator);
-    padding-top: 22px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .hero-date {
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    color: var(--brown-soft);
-    text-transform: uppercase;
-  }
-
-  .share-btn {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: none;
-    border: 1px solid var(--gold-light);
-    padding: 8px 20px;
-    cursor: pointer;
-    border-radius: 1px;
-    transition: all 0.2s;
-  }
-
-  .share-btn:hover { background: var(--gold); color: white; }
-
-  /* ── ARCHIVE GRID ── */
-  .archive-section {
-    max-width: 1100px;
-    margin: 80px auto 0;
-    padding: 0 24px;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 36px;
-    border-bottom: 1px solid var(--separator);
-    padding-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-  }
-
-  .section-link {
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .section-link:hover { opacity: 0.6; }
-
-  /* Filter tags */
-  .filter-bar {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 36px;
-  }
-
-  .filter-tag {
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 100px;
-    background: var(--tag-bg);
-    color: var(--brown-soft);
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-    font-family: 'Jost', sans-serif;
-  }
-
-  .filter-tag:hover, .filter-tag.active {
-    background: var(--ink);
-    color: var(--cream);
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-  }
-
-  .card {
-    background: var(--warm-white);
-    border: 1px solid var(--separator);
-    border-radius: 2px;
-    padding: 32px 30px;
-    cursor: pointer;
-    transition: transform 0.25s, box-shadow 0.25s;
-    position: relative;
-    overflow: hidden;
-    animation: fadein 0.6s ease both;
-  }
-
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(26,22,18,0.08);
-  }
-
-  .card-tag {
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 12px;
-  }
-
-  .card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    line-height: 1.3;
-    margin-bottom: 12px;
-    color: var(--ink);
-  }
-
-  .card-excerpt {
-    font-size: 0.83rem;
-    line-height: 1.75;
-    color: var(--brown-soft);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 22px;
-    padding-top: 16px;
-    border-top: 1px solid var(--separator);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: var(--brown-soft);
-    text-transform: uppercase;
-  }
-
-  .card-verse-ref {
-    color: var(--gold);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-  }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(26,22,18,0.6);
-    backdrop-filter: blur(4px);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--cream);
-    border: 1px solid var(--separator);
-    max-width: 680px;
-    width: 100%;
-    max-height: 88vh;
-    overflow-y: auto;
-    padding: 52px 52px;
-    border-radius: 2px;
-    position: relative;
-    animation: slideup 0.3s ease both;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 20px; right: 24px;
-    background: none; border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: var(--brown-soft);
-    transition: color 0.2s;
-  }
-
-  .modal-close:hover { color: var(--ink); }
-
-  .modal-tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-
-  .modal-verse {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.2rem;
-    line-height: 1.7;
-    padding: 20px 24px;
-    border-left: 2px solid var(--gold);
-    margin-bottom: 28px;
-    color: #3D342C;
-    background: var(--warm-white);
-  }
-
-  .modal-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.9rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 24px;
-  }
-
-  .modal-body {
-    font-size: 0.93rem;
-    line-height: 1.95;
-    color: #3D342C;
-  }
-
-  .modal-body p + p { margin-top: 16px; }
-
-  /* ── NEWSLETTER STRIP ── */
-  .newsletter-strip {
-    max-width: 780px;
-    margin: 80px auto;
-    padding: 0 24px;
-    text-align: center;
-  }
-
-  .newsletter-inner {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 52px 48px;
-    border-radius: 2px;
-  }
-
-  .newsletter-inner .cross-small {
-    font-size: 1.4rem;
-    color: var(--gold);
-    display: block;
-    margin-bottom: 16px;
-  }
-
-  .nl-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    font-weight: 300;
-    margin-bottom: 10px;
-    letter-spacing: 0.03em;
-  }
-
-  .nl-sub {
-    font-size: 0.8rem;
-    opacity: 0.6;
-    letter-spacing: 0.1em;
-    margin-bottom: 28px;
-    text-transform: uppercase;
-  }
-
-  .nl-form {
-    display: flex;
-    gap: 0;
-    max-width: 380px;
-    margin: 0 auto;
-  }
-
-  .nl-input {
-    flex: 1;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-right: none;
-    padding: 12px 18px;
-    color: var(--cream);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.83rem;
-    outline: none;
-    border-radius: 1px 0 0 1px;
-  }
-
-  .nl-input::placeholder { opacity: 0.4; }
-
-  .nl-btn {
-    background: var(--gold);
-    border: none;
-    padding: 12px 22px;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: white;
-    cursor: pointer;
-    border-radius: 0 1px 1px 0;
-    transition: background 0.2s;
-  }
-
-  .nl-btn:hover { background: var(--gold-light); }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--separator);
-    padding: 36px 24px;
-    text-align: center;
-  }
-
-  .footer-verse {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--brown-soft);
-    margin-bottom: 10px;
-  }
-
-  .footer-copy {
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #B0A898;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  @keyframes slideup {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 640px) {
-    .hero-card { padding: 36px 28px; }
-    .modal { padding: 36px 28px; }
-    .nl-form { flex-direction: column; }
-    .nl-input, .nl-btn { border-radius: 1px; border-right: 1px solid rgba(255,255,255,0.2); }
-    .nl-btn { border-top: none; }
-  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.4;}
+  header{display:flex;flex-direction:column;align-items:center;padding:60px 24px 40px;border-bottom:1px solid var(--separator);}
+  .cross-icon{width:28px;height:28px;margin-bottom:18px;opacity:0.7;animation:fadein 1.2s ease both;}
+  .site-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:0.08em;animation:fadein 1.4s ease both;}
+  .site-subtitle{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--brown-soft);margin-top:8px;animation:fadein 1.6s ease both;}
+  .site-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--gold);margin-top:10px;letter-spacing:0.03em;animation:fadein 1.8s ease both;}
+  .hero-section{max-width:780px;margin:64px auto 0;padding:0 24px;animation:slideup 1s ease both 0.3s;}
+  .label-today{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+  .label-today::after{content:'';flex:1;height:1px;background:var(--gold-light);opacity:0.5;}
+  .hero-card{background:var(--warm-white);border:1px solid var(--separator);border-radius:2px;padding:52px 56px;position:relative;overflow:hidden;}
+  .hero-card::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:14rem;color:var(--gold);opacity:0.07;position:absolute;top:-30px;left:20px;line-height:1;pointer-events:none;}
+  .hero-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.35rem,3vw,1.75rem);line-height:1.65;margin-bottom:14px;}
+  .hero-ref{font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;}
+  .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:600;line-height:1.25;margin-bottom:22px;}
+  .hero-body{font-size:0.95rem;line-height:1.9;color:#3D342C;margin-bottom:32px;}
+  .hero-body p+p{margin-top:14px;}
+  .hero-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--separator);padding-top:22px;flex-wrap:wrap;gap:12px;}
+  .hero-date{font-size:0.72rem;letter-spacing:0.15em;color:var(--brown-soft);text-transform:uppercase;}
+  .share-btn{font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);background:none;border:1px solid var(--gold-light);padding:8px 20px;cursor:pointer;border-radius:1px;transition:all 0.2s;}
+  .share-btn:hover{background:var(--gold);color:white;}
+  .archive-section{max-width:1100px;margin:80px auto 0;padding:0 24px;}
+  .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:36px;border-bottom:1px solid var(--separator);padding-bottom:16px;}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;letter-spacing:0.04em;}
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+  .filter-tag{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;padding:6px 16px;border-radius:100px;background:var(--tag-bg);color:var(--brown-soft);cursor:pointer;border:1px solid transparent;transition:all 0.2s;font-family:'Jost',sans-serif;}
+  .filter-tag:hover,.filter-tag.active{background:var(--ink);color:var(--cream);}
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+  .card{background:var(--warm-white);border:1px solid var(--separator);border-radius:2px;padding:32px 30px;cursor:pointer;transition:transform 0.25s,box-shadow 0.25s;animation:fadein 0.6s ease both;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(26,22,18,0.08);}
+  .card-tag{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .card-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;line-height:1.3;margin-bottom:12px;}
+  .card-excerpt{font-size:0.83rem;line-height:1.75;color:var(--brown-soft);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .card-meta{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:16px;border-top:1px solid var(--separator);font-size:0.68rem;letter-spacing:0.1em;color:var(--brown-soft);text-transform:uppercase;}
+  .card-verse-ref{color:var(--gold);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,22,18,0.6);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--cream);border:1px solid var(--separator);max-width:680px;width:100%;max-height:88vh;overflow-y:auto;padding:52px;border-radius:2px;position:relative;animation:slideup 0.3s ease both;}
+  .modal-close{position:absolute;top:20px;right:24px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--brown-soft);}
+  .modal-tag{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+  .modal-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;line-height:1.7;padding:20px 24px;border-left:2px solid var(--gold);margin-bottom:28px;color:#3D342C;background:var(--warm-white);}
+  .modal-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;line-height:1.2;margin-bottom:24px;}
+  .modal-body{font-size:0.93rem;line-height:1.95;color:#3D342C;}
+  .modal-body p+p{margin-top:16px;}
+  .newsletter-strip{max-width:780px;margin:80px auto;padding:0 24px;text-align:center;}
+  .newsletter-inner{background:var(--ink);color:var(--cream);padding:52px 48px;border-radius:2px;}
+  .newsletter-inner .cross-small{font-size:1.4rem;color:var(--gold);display:block;margin-bottom:16px;}
+  .nl-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:10px;}
+  .nl-sub{font-size:0.8rem;opacity:0.6;letter-spacing:0.1em;margin-bottom:28px;text-transform:uppercase;}
+  .nl-form{display:flex;max-width:380px;margin:0 auto;}
+  .nl-input{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-right:none;padding:12px 18px;color:var(--cream);font-family:'Jost',sans-serif;font-size:0.83rem;outline:none;}
+  .nl-btn{background:var(--gold);border:none;padding:12px 22px;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:white;cursor:pointer;}
+  footer{border-top:1px solid var(--separator);padding:36px 24px;text-align:center;}
+  .footer-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--brown-soft);margin-bottom:10px;}
+  .footer-copy{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:#B0A898;}
+  .loading{text-align:center;padding:60px;color:var(--brown-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  @keyframes slideup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:640px){.hero-card{padding:36px 28px;}.modal{padding:36px 28px;}}
 </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header>
   <svg class="cross-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="11" y="2" width="6" height="24" rx="1" fill="#B8955A"/>
@@ -535,36 +86,32 @@
   <p class="site-tagline">Un lugar para compartir nuestra Fe y la Palabra del Señor</p>
 </header>
 
-<!-- HERO / TODAY -->
 <section class="hero-section">
   <div class="label-today" id="today-label">— Devocional de hoy</div>
   <article class="hero-card" id="hero-card">
-    <!-- Populated by JS -->
+    <div class="loading">Cargando el devocional de hoy...</div>
   </article>
 </section>
 
-<!-- ARCHIVE -->
 <section class="archive-section">
   <div class="section-header">
     <h2 class="section-title">Devocionales anteriores</h2>
-    <a href="#" class="section-link">Ver todos →</a>
   </div>
-
   <div class="filter-bar">
-    <button class="filter-tag active" onclick="filterCards('todos', this)">Todos</button>
-    <button class="filter-tag" onclick="filterCards('fe', this)">Fe</button>
-    <button class="filter-tag" onclick="filterCards('gracia', this)">Gracia</button>
-    <button class="filter-tag" onclick="filterCards('esperanza', this)">Esperanza</button>
-    <button class="filter-tag" onclick="filterCards('amor', this)">Amor</button>
-    <button class="filter-tag" onclick="filterCards('oracion', this)">Oración</button>
+    <button class="filter-tag active" onclick="filterCards('todos',this)">Todos</button>
+    <button class="filter-tag" onclick="filterCards('fe',this)">Fe</button>
+    <button class="filter-tag" onclick="filterCards('gracia',this)">Gracia</button>
+    <button class="filter-tag" onclick="filterCards('esperanza',this)">Esperanza</button>
+    <button class="filter-tag" onclick="filterCards('amor',this)">Amor</button>
+    <button class="filter-tag" onclick="filterCards('oracion',this)">Oración</button>
+    <button class="filter-tag" onclick="filterCards('paz',this)">Paz</button>
+    <button class="filter-tag" onclick="filterCards('identidad',this)">Identidad</button>
   </div>
-
   <div class="cards-grid" id="cards-grid">
-    <!-- Populated by JS -->
+    <div class="loading">Cargando artículos...</div>
   </div>
 </section>
 
-<!-- NEWSLETTER -->
 <section class="newsletter-strip">
   <div class="newsletter-inner">
     <span class="cross-small">✝</span>
@@ -577,13 +124,11 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p class="footer-verse">"Tu palabra es lámpara a mis pies, y lumbrera a mi camino." — Salmos 119:105</p>
-  <p class="footer-copy">© 2025 Devocionales Cristianos · Con amor y fe</p>
+  <p class="footer-copy">© 2026 El Blog de Pedro Lavado · Con amor y fe</p>
 </footer>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal" id="modal-content">
     <button class="modal-close" onclick="closeModalBtn()">✕</button>
@@ -592,146 +137,46 @@
 </div>
 
 <script>
-// ─────────────────────────────────────────────
-// DATA: Devocionales (simula tu JSON / API)
-// ─────────────────────────────────────────────
-const devocionales = [
-  {
-  id: 1,
-  fecha: "2026-04-04",
-  tag: "gracia",
-  tagLabel: "Gracia",
-  versiculo: "Y salió Jesús y vio una gran multitud, y tuvo compasión de ellos, porque eran como ovejas que no tenían pastor...",
-  referencia: "Marcos 6:34",
-  titulo: "La compasión de Jesús",
-  cuerpo: [
-    "Este pasaje revela una de las características más profundas del corazón de Jesucristo: su compasión. Para entender su significado, es necesario considerar el contexto. Jesús acababa de recibir la noticia de la muerte de Juan el Bautista (Marcos 6:17-29), una pérdida cercana y dolorosa. Además, Él y sus discípulos estaban agotados por el constante ministerio, al punto que no tenían tiempo ni para comer (Marcos 6:31). En medio de ese cansancio físico, emocional y espiritual, Jesús intenta retirarse para descansar. Sin embargo, la multitud se adelanta y lo espera. Humanamente, habría sido comprensible que se apartara o postergara la atención. Pero la Escritura dice que al verlos, “tuvo compasión”. La palabra utilizada para “compasión” implica una conmoción profunda del interior, un amor que nace desde lo más íntimo del ser. No se trata de un sentimiento superficial, sino de una respuesta activa frente al sufrimiento humano. Jesús no solo veía a las personas, sino que discernía su condición espiritual: “como ovejas que no tenían pastor”, es decir, desorientadas, vulnerables y necesitadas de guía.",
-    "Este rasgo de Cristo se confirma en otros pasajes. En Mateo 9:36 se repite la misma idea: “Y al ver las multitudes, tuvo compasión de ellas; porque estaban desamparadas y dispersas como ovejas que no tienen pastor”. Asimismo, en Mateo 14:14, después de un momento de retiro, “tuvo compasión de ellos y sanó a los que de ellos estaban enfermos”. La compasión de Jesús no es pasiva; se traduce en enseñanza, sanidad y provisión. El evangelio también muestra que Jesús conoce profundamente el corazón humano. “Él sabía lo que había en el hombre” (Juan 2:25). Esto significa que su compasión no es ingenua ni superficial, sino perfectamente informada. Él conoce tanto nuestras necesidades visibles como las ocultas. El testimonio de Hebreos 4:15 amplía aún más esta verdad: “Porque no tenemos un sumo sacerdote que no pueda compadecerse de nuestras debilidades, sino uno que fue tentado en todo según nuestra semejanza, pero sin pecado”. Jesús no solo entiende el sufrimiento desde fuera, sino que lo experimentó plenamente en su humanidad. Aun sabiendo que sería rechazado, traicionado y crucificado (Juan 1:11; Mateo 26:34; Mateo 27:22-23), Jesús no dejó de amar ni de servir. Su compasión no dependía de las circunstancias ni de la respuesta de las personas, sino de su propia naturaleza. Esta misma compasión permanece vigente hoy. Dios declara en Salmos 103:13: “Como el padre se compadece de los hijos, se compadece Jehová de los que le temen”. Y en Lamentaciones 3:22-23 se afirma que sus misericordias son nuevas cada mañana.",
-    "Por tanto, la invitación es clara. Jesús no es indiferente a la situación personal de cada uno. Él conoce el dolor, la carga y la necesidad. La respuesta adecuada es acercarse con confianza: “Acerquémonos, pues, confiadamente al trono de la gracia, para alcanzar misericordia y hallar gracia para el oportuno socorro” (Hebreos 4:16). La compasión de Jesús no es solo una enseñanza, es una realidad viva. Él sigue mirando, entendiendo y respondiendo. No se ha olvidado de quienes le buscan."
-  ],
-  oracion: "Señor Jesús, reconozco que muchas veces he estado como oveja sin pastor, cansado, confundido o necesitado. Gracias porque tu compasión no depende de mis circunstancias ni de mis méritos, sino de tu amor perfecto. Hoy me acerco a Ti con confianza, sabiendo que conoces mi corazón y mis necesidades. Guíame, fortaléceme y ayúdame a descansar en tu cuidado. Amén."
-  },
-  {
-    id: 2,
-    fecha: "2025-07-12",
-    tag: "fe",
-    tagLabel: "Fe",
-    versiculo: "Porque por fe andamos, no por vista.",
-    referencia: "2 Corintios 5:7",
-    titulo: "Caminar sin ver: el desafío de la fe auténtica",
-    cuerpo: [
-      "Hay momentos en la vida donde el camino desaparece bajo nuestros pies y todo lo que nos queda es dar el siguiente paso sin certeza de que el suelo estará ahí. Es en esos momentos donde la fe deja de ser un concepto teológico y se convierte en la única brújula que tenemos.",
-      "El apóstol Pablo no escribió estas palabras desde la comodidad. Las escribió desde prisiones, desde naufragios, desde el rechazo constante. Su fe no era la fe de quien nunca ha dudado, sino la de quien ha dudado, ha temblado, y aun así ha seguido caminando.",
-      "Hoy, si sientes que no ves el camino con claridad, recuerda: la fe no exige visión perfecta. Exige un paso. Solo uno. Y Dios honra ese paso con Su presencia."
-    ],
-    oracion: "Señor, cuando no puedo ver el horizonte, enséñame a confiar en Tu mano que me guía. Dame la valentía de dar el siguiente paso. Amén."
-  },
-  {
-    id: 3,
-    fecha: "2025-07-11",
-    tag: "gracia",
-    tagLabel: "Gracia",
-    versiculo: "Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios.",
-    referencia: "Efesios 2:8",
-    titulo: "La gracia que no se puede ganar",
-    cuerpo: [
-      "Vivimos en un mundo que nos dice que todo se gana. Que el mérito es la moneda de la vida. Pero el evangelio llega con una declaración que subvierte toda lógica humana: la mayor dádiva que existe no se puede ganar, no se puede comprar, no se puede merecer.",
-      "La gracia de Dios es el regalo más desconcertante de la historia. No porque sea barato, sino porque fue infinitamente costoso para Él y absolutamente gratuito para nosotros. La cruz es la paradoja donde el precio fue pagado por Quien no debía nada.",
-      "Descansa hoy en esa gracia. No tienes que demostrar nada. No tienes que ser suficiente. Solo recibe."
-    ],
-    oracion: "Padre, gracias porque Tu amor no depende de mi desempeño. Ayúdame a vivir desde la gratitud, no desde el miedo. Amén."
-  },
-  {
-    id: 4,
-    fecha: "2025-07-10",
-    tag: "esperanza",
-    tagLabel: "Esperanza",
-    versiculo: "Y la esperanza no avergüenza; porque el amor de Dios ha sido derramado en nuestros corazones.",
-    referencia: "Romanos 5:5",
-    titulo: "Esperanza que no decepciona",
-    cuerpo: [
-      "La esperanza humana frecuentemente defrauda. Ponemos nuestra confianza en personas, en proyectos, en futuros que imaginamos, y muchas veces el resultado nos deja con el corazón vacío. Pero Pablo habla de una esperanza radicalmente diferente.",
-      "Esta esperanza está anclada no en circunstancias sino en carácter, no en promesas humanas sino en el Dios que es incapaz de mentir. Es una esperanza que ha sobrevivido el fuego de la persecución, las noches más oscuras de la historia y los corazones más quebrantados.",
-      "Si hoy tu corazón está cansado de esperar, recuerda: la espera misma es un acto de fe, y Dios nunca ha llegado tarde a ninguna de Sus promesas."
-    ],
-    oracion: "Dios de la esperanza, renueva mi confianza en Ti. Que mi corazón descanse en Tus promesas hoy. Amén."
-  },
-  {
-    id: 5,
-    fecha: "2025-07-09",
-    tag: "amor",
-    tagLabel: "Amor",
-    versiculo: "El amor es sufrido, es benigno; el amor no tiene envidia.",
-    referencia: "1 Corintios 13:4",
-    titulo: "El amor que elige, no que siente",
-    cuerpo: [
-      "En nuestra cultura, el amor se ha reducido a una emoción. Algo que llega y que se va, que depende de cómo me tratan o de cómo me siento. Pero el amor que describe Pablo es un verbo de acción, no un sustantivo de emoción.",
-      "Sufrir con paciencia. Actuar con benignidad. Abstenerse de envidiar. Cada uno de estos es una decisión consciente, tomada muchas veces en contra de nuestro primer instinto. Es el amor que eligió la cruz cuando todo el universo emocional gritaba que no valía la pena.",
-      "Hoy te invito a practicar una pequeña decisión de amor: hacia alguien difícil, hacia una situación que te cuesta, hacia ti mismo."
-    ],
-    oracion: "Señor, enséñame a amar como Tú amas: con decisión, con constancia, con gracia. Amén."
-  },
-  {
-    id: 6,
-    fecha: "2025-07-08",
-    tag: "oracion",
-    tagLabel: "Oración",
-    versiculo: "Orad sin cesar.",
-    referencia: "1 Tesalonicenses 5:17",
-    titulo: "La conversación que nunca termina",
-    cuerpo: [
-      "Tres palabras. Uno de los versículos más cortos de la Biblia y también uno de los más desafiantes. ¿Cómo se ora sin cesar cuando la vida demanda atención constante? ¿Cuando el trabajo, la familia, el ruido no dan tregua?",
-      "La oración continua no es estar de rodillas las 24 horas. Es vivir con la conciencia de que Dios está presente en cada momento: en la reunión difícil, en el tráfico, en la conversación tensa, en la alegría inesperada. Es una postura del corazón más que una posición del cuerpo.",
-      "Prueba hoy incluir a Dios en los pequeños momentos. Un 'gracias' al despertar. Un 'ayúdame' antes de una decisión difícil. Una pausa de silencio en medio del ruido. Así se construye una vida de oración."
-    ],
-    oracion: "Padre, que cada momento de hoy sea una conversación contigo. Que tu presencia sea mi respiración. Amén."
-  },
-  {
-    id: 7,
-    fecha: "2025-07-07",
-    tag: "fe",
-    tagLabel: "Fe",
-    versiculo: "Jehová es mi pastor; nada me faltará.",
-    referencia: "Salmos 23:1",
-    titulo: "El pastor que conoce tu nombre",
-    cuerpo: [
-      "David escribió este salmo desde el desierto, literal y emocionalmente. Era un rey perseguido por su propio hijo, un hombre que había conocido la gloria y el abandono en proporciones iguales. Y aun así declaró: nada me faltará.",
-      "Esta no es la declaración de alguien que nunca ha sufrido carencia. Es la declaración de alguien que ha visto a Dios proveer en medio de la carencia. El 'nada me faltará' no promete ausencia de dificultades; promete presencia divina en medio de ellas.",
-      "¿En qué área de tu vida necesitas hoy recordar que tienes un Pastor? Ponle nombre a esa necesidad y entrégala."
-    ],
-    oracion: "Buen Pastor, guíame por sendas de justicia. Donde hay carencia, provee. Donde hay miedo, dame paz. Amén."
+// ── Lee devocionales.json externo ──
+let devocionales = [];
+let activeFilter = 'todos';
+
+async function loadData() {
+  try {
+    const res = await fetch('devocionales.json?v=' + Date.now());
+    devocionales = await res.json();
+    // Ordenar: más reciente primero, por fecha y orden
+    devocionales.sort((a,b) => b.fecha.localeCompare(a.fecha) || (a.orden||1)-(b.orden||1));
+  } catch(e) {
+    console.error('No se pudo cargar devocionales.json', e);
+    devocionales = [];
   }
-];
-
-// ─────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────
-function formatDate(dateStr) {
-  const [y, m, d] = dateStr.split('-').map(Number);
-  const months = ['enero','febrero','marzo','abril','mayo','junio',
-                  'julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  return `${d} de ${months[m-1]} de ${y}`;
+  renderHero();
+  renderCards();
 }
 
-function getDailyDevocional() {
-  // Usa la fecha actual para seleccionar el devocional del día
-  // En producción esto vendría de tu backend/API
-  const today = new Date().toISOString().split('T')[0];
-  return devocionales.find(d => d.fecha === today) || devocionales[0];
+function formatDate(d) {
+  const [y,m,day] = d.split('-').map(Number);
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return `${day} de ${months[m-1]} de ${y}`;
 }
 
-// ─────────────────────────────────────────────
-// RENDER HERO
-// ─────────────────────────────────────────────
 function renderHero() {
-  const dev = getDailyDevocional();
-  const today = new Date();
+  const today = new Date().toISOString().split('T')[0];
   const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  const months = ['enero','febrero','marzo','abril','mayo','junio',
-                  'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const now = new Date();
+
+  // Busca el devocional más reciente (que no sea futuro)
+  const dev = devocionales.find(d => d.fecha <= today) || devocionales[0];
 
   document.getElementById('today-label').innerHTML =
-    `— ${days[today.getDay()]}, ${today.getDate()} de ${months[today.getMonth()]} de ${today.getFullYear()}`;
+    `— ${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+
+  if (!dev) {
+    document.getElementById('hero-card').innerHTML = '<p style="text-align:center;padding:40px;color:#9A8A7A;font-style:italic;">Próximamente el primer devocional...</p>';
+    return;
+  }
 
   document.getElementById('hero-card').innerHTML = `
     <p class="hero-ref">${dev.referencia} · ${dev.tagLabel}</p>
@@ -742,85 +187,64 @@ function renderHero() {
     </div>
     <div class="hero-footer">
       <span class="hero-date">${formatDate(dev.fecha)}</span>
-      <button class="share-btn" onclick="shareDevocional('${dev.titulo}', '${dev.referencia}')">Compartir ↗</button>
-    </div>
-  `;
+      <button class="share-btn" onclick="shareDevocional('${dev.titulo.replace(/'/g,"\\'")}','${dev.referencia}')">Compartir ↗</button>
+    </div>`;
 }
 
-// ─────────────────────────────────────────────
-// RENDER ARCHIVE CARDS
-// ─────────────────────────────────────────────
-let activeFilter = 'todos';
+function renderCards(filter) {
+  if (filter !== undefined) activeFilter = filter;
+  const today = new Date().toISOString().split('T')[0];
+  const heroDate = (devocionales.find(d => d.fecha <= today) || {}).fecha;
 
-function renderCards(filter = 'todos') {
-  const todayDev = getDailyDevocional();
-  const archive = devocionales.filter(d => d.id !== todayDev.id);
-  const filtered = filter === 'todos' ? archive : archive.filter(d => d.tag === filter);
+  let list = devocionales.filter(d => d.fecha !== heroDate || (d.orden||1) > 1);
+  if (activeFilter !== 'todos') list = list.filter(d => d.tag === activeFilter);
 
-  document.getElementById('cards-grid').innerHTML = filtered.map((dev, i) => `
-    <article class="card" onclick="openModal(${dev.id})" style="animation-delay:${i*0.08}s">
-      <p class="card-tag">✝ ${dev.tagLabel}</p>
-      <h3 class="card-title">${dev.titulo}</h3>
-      <p class="card-excerpt">${dev.cuerpo[0]}</p>
-      <div class="card-meta">
-        <span>${formatDate(dev.fecha)}</span>
-        <span class="card-verse-ref">${dev.referencia}</span>
-      </div>
-    </article>
-  `).join('') || `<p style="color:var(--brown-soft);font-size:0.85rem;grid-column:1/-1;">No hay devocionales en esta categoría.</p>`;
+  document.getElementById('cards-grid').innerHTML = list.length
+    ? list.map((dev,i) => `
+        <article class="card" onclick="openModal(${dev.id})" style="animation-delay:${i*0.06}s">
+          <p class="card-tag">✝ ${dev.tagLabel}${(dev.orden||1)>1?' · '+dev.orden+'° del día':''}</p>
+          <h3 class="card-title">${dev.titulo}</h3>
+          <p class="card-excerpt">${dev.cuerpo[0]}</p>
+          <div class="card-meta">
+            <span>${formatDate(dev.fecha)}</span>
+            <span class="card-verse-ref">${dev.referencia}</span>
+          </div>
+        </article>`).join('')
+    : `<p style="color:var(--brown-soft);font-size:0.85rem;grid-column:1/-1;">No hay devocionales en esta categoría.</p>`;
 }
 
 function filterCards(tag, btn) {
-  activeFilter = tag;
   document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderCards(tag);
 }
 
-// ─────────────────────────────────────────────
-// MODAL
-// ─────────────────────────────────────────────
 function openModal(id) {
   const dev = devocionales.find(d => d.id === id);
   if (!dev) return;
   document.getElementById('modal-body').innerHTML = `
     <p class="modal-tag">✝ ${dev.tagLabel} · ${formatDate(dev.fecha)}</p>
-    <blockquote class="modal-verse">"${dev.versiculo}"<br><span style="font-style:normal;font-size:0.75rem;letter-spacing:0.12em;color:var(--gold);display:block;margin-top:8px;">${dev.referencia}</span></blockquote>
+    <blockquote class="modal-verse">"${dev.versiculo}"<br>
+      <span style="font-style:normal;font-size:0.75rem;letter-spacing:0.12em;color:var(--gold);display:block;margin-top:8px;">${dev.referencia}</span>
+    </blockquote>
     <h2 class="modal-title">${dev.titulo}</h2>
     <div class="modal-body">${dev.cuerpo.map(p=>`<p>${p}</p>`).join('')}
       <p style="margin-top:24px;padding:18px 20px;background:var(--warm-white);border-left:2px solid var(--gold);font-style:italic;color:#6B5B4E;font-size:0.88rem;">🙏 ${dev.oracion}</p>
-    </div>
-  `;
+    </div>`;
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
-function closeModal(e) {
-  if (e.target.id === 'modal') closeModalBtn();
-}
+function closeModal(e) { if (e.target.id==='modal') closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; }
 
-function closeModalBtn() {
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ─────────────────────────────────────────────
-// SHARE
-// ─────────────────────────────────────────────
 function shareDevocional(titulo, ref) {
-  const text = `📖 "${titulo}" — ${ref}\nDevocional diario en: ${window.location.href}`;
-  if (navigator.share) {
-    navigator.share({ title: titulo, text });
-  } else {
-    navigator.clipboard.writeText(text).then(() => alert('¡Enlace copiado al portapapeles!'));
-  }
+  const text = `📖 "${titulo}" — ${ref}\n${window.location.href}`;
+  if (navigator.share) navigator.share({title: titulo, text});
+  else navigator.clipboard.writeText(text).then(()=>alert('¡Enlace copiado!'));
 }
 
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
-renderHero();
-renderCards();
+loadData();
 </script>
 </body>
 </html>

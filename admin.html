@@ -6,159 +6,96 @@
 <title>Admin · El Blog de Pedro Lavado</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0F0D0B;
-  --surface: #181410;
-  --surface2: #221E18;
-  --border: #2E2820;
-  --gold: #C9A055;
-  --gold-dim: #7A5F30;
-  --gold-light: #E8C87A;
-  --cream: #F0E4C5;
-  --muted: #7A7068;
-  --green: #4CAF85;
-  --green-bg: #1A3D2C;
-  --red: #E05A4A;
-  --red-bg: #3A1510;
-}
+:root{--bg:#0F0D0B;--sur:#181410;--sur2:#221E18;--sur3:#2A2420;--bdr:#2E2820;--gold:#C9A055;--gdim:#7A5F30;--glit:#E8C87A;--cream:#F0E4C5;--muted:#7A7068;--grn:#4CAF85;--gbg:#1A3D2C;--red:#E05A4A;--rbg:#3A1510;--blu:#5A8AE0;--bbg:#1A2540;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--cream);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;}
-
-/* TOP BAR */
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 32px;border-bottom:1px solid var(--border);
-  background:var(--surface);position:sticky;top:0;z-index:50;
-}
-.brand{display:flex;align-items:center;gap:12px;}
-.brand-cross{color:var(--gold);font-size:1.2rem;}
-.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;letter-spacing:0.06em;}
-.brand-sub{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
-.view-blog{
-  font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;
-  color:var(--gold);text-decoration:none;border:1px solid var(--gold-dim);
-  padding:7px 16px;border-radius:2px;transition:all 0.2s;
-}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:13px 26px;border-bottom:1px solid var(--bdr);background:var(--sur);position:sticky;top:0;z-index:50;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-cross{color:var(--gold);font-size:1.1rem;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:0.06em;}
+.brand-sub{font-size:0.57rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
+.tbar-r{display:flex;gap:9px;align-items:center;}
+.view-blog{font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid var(--gdim);padding:6px 13px;border-radius:2px;transition:all 0.2s;}
 .view-blog:hover{background:var(--gold);color:#0F0D0B;}
+.tabs{display:flex;border-bottom:1px solid var(--bdr);background:var(--sur);}
+.tab{font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;padding:11px 20px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif;}
+.tab:hover{color:var(--cream);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.panel{display:none;}.panel.active{display:block;}
 
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:1fr 420px;gap:0;min-height:calc(100vh - 57px);}
+/* EDITOR */
+.ed-layout{display:grid;grid-template-columns:1fr 390px;min-height:calc(100vh - 94px);}
+.fp{padding:26px 30px;border-right:1px solid var(--bdr);overflow-y:auto;max-height:calc(100vh - 94px);}
+.op{display:flex;flex-direction:column;max-height:calc(100vh - 94px);}
+.prev-scroll{flex:1;overflow-y:auto;padding:20px 22px;}
+.code-sec{padding:12px 22px 18px;border-top:1px solid var(--bdr);}
 
-/* FORM PANEL */
-.form-panel{padding:36px 40px;border-right:1px solid var(--border);}
+/* ARTICLES */
+.art-layout{padding:26px 30px;}
+.art-toolbar{display:flex;gap:9px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.srch{flex:1;min-width:160px;background:var(--sur2);border:1px solid var(--bdr);color:var(--cream);font-family:'Jost',sans-serif;font-size:0.82rem;padding:7px 11px;border-radius:2px 0 0 2px;outline:none;}
+.srch:focus{border-color:var(--gdim);}
+.fdate,.ftag{background:var(--sur2);border:1px solid var(--bdr);border-left:none;color:var(--cream);font-family:'Jost',sans-serif;font-size:0.79rem;padding:7px 9px;outline:none;}
+.ftag{border-radius:0 2px 2px 0;}
+.art-tbl{width:100%;border-collapse:collapse;}
+.art-tbl th{font-size:0.57rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:8px 11px;text-align:left;border-bottom:1px solid var(--bdr);font-weight:400;}
+.art-tbl td{padding:10px 11px;border-bottom:1px solid var(--bdr);font-size:0.79rem;vertical-align:middle;}
+.art-tbl tr:hover td{background:var(--sur2);}
+.tddate{color:var(--muted);font-size:0.71rem;white-space:nowrap;}
+.tdtitle{color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:0.96rem;}
+.tag-pill{display:inline-block;font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:rgba(201,160,85,0.1);color:var(--gold);border:1px solid var(--gdim);}
+.acts{display:flex;gap:5px;}
+.ab{font-size:0.57rem;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;cursor:pointer;border:none;font-family:'Jost',sans-serif;font-weight:500;transition:all 0.15s;}
+.ab-edit{background:var(--bbg);color:var(--blu);}.ab-edit:hover{background:var(--blu);color:#0F0D0B;}
+.ab-del{background:var(--rbg);color:var(--red);}.ab-del:hover{background:var(--red);color:#fff;}
+.ab-dup{background:var(--sur3);color:var(--muted);}.ab-dup:hover{color:var(--cream);}
+.no-art{text-align:center;padding:48px;color:var(--muted);font-size:0.82rem;line-height:1.8;}
 
-.section-label{
-  font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px;
-}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+/* JSON EXPORT */
+.json-layout{padding:26px 30px;max-width:860px;}
+.json-box{background:var(--sur2);border:1px solid var(--bdr);border-radius:2px;padding:16px;font-family:monospace;font-size:0.71rem;line-height:1.65;color:#9A8A7A;white-space:pre-wrap;word-break:break-all;max-height:460px;overflow-y:auto;margin-bottom:14px;}
+.inst-box{background:var(--sur2);border:1px solid var(--bdr);border-radius:2px;padding:20px;margin-top:16px;}
+.inst-box h3{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:13px;}
+.ist{display:flex;gap:9px;margin-bottom:11px;font-size:0.79rem;color:var(--muted);line-height:1.6;align-items:flex-start;}
+.isn{width:19px;height:19px;border-radius:50%;background:var(--gold);color:#0F0D0B;font-size:0.6rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+code{color:var(--gold);font-size:0.75rem;}
+.warn{background:rgba(201,160,85,0.08);border:1px solid var(--gdim);border-radius:2px;padding:12px 16px;font-size:0.78rem;color:var(--gold);margin-bottom:16px;}
 
-.field{margin-bottom:20px;}
-label{
-  display:block;font-size:0.62rem;letter-spacing:0.18em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:7px;
-}
-input[type="text"],input[type="date"],select,textarea{
-  width:100%;background:var(--surface2);border:1px solid var(--border);
-  color:var(--cream);font-family:'Jost',sans-serif;font-size:0.88rem;
-  font-weight:300;padding:10px 14px;border-radius:2px;outline:none;
-  transition:border-color 0.2s;resize:vertical;
-}
-input:focus,select:focus,textarea:focus{border-color:var(--gold-dim);}
-input::placeholder,textarea::placeholder{color:var(--muted);opacity:0.6;}
-select option{background:var(--surface2);}
-textarea{line-height:1.7;min-height:90px;}
+/* SHARED */
+.slabel{font-size:0.56rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.slabel::after{content:'';flex:1;height:1px;background:var(--bdr);}
+.field{margin-bottom:15px;}
+label{display:block;font-size:0.57rem;letter-spacing:0.17em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+input[type="text"],input[type="date"],select,textarea{width:100%;background:var(--sur2);border:1px solid var(--bdr);color:var(--cream);font-family:'Jost',sans-serif;font-size:0.83rem;font-weight:300;padding:8px 11px;border-radius:2px;outline:none;transition:border-color 0.2s;resize:vertical;}
+input:focus,select:focus,textarea:focus{border-color:var(--gdim);}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:0.45;}
+select option{background:var(--sur2);}
+textarea{line-height:1.7;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+.wc{font-size:0.56rem;color:var(--muted);margin-top:3px;text-align:right;}
+.btn{font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.13em;text-transform:uppercase;font-weight:500;padding:9px 17px;border-radius:2px;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-p{background:var(--gold);color:#0F0D0B;}.btn-p:hover{background:var(--glit);}
+.btn-s{background:var(--sur2);color:var(--cream);border:1px solid var(--bdr);}.btn-s:hover{border-color:var(--gdim);}
+.btn-d{background:var(--rbg);color:var(--red);border:1px solid var(--rbg);}.btn-d:hover{border-color:var(--red);}
+.btn-row{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.cpybtn{font-size:0.57rem;letter-spacing:0.11em;text-transform:uppercase;background:var(--gold);color:#0F0D0B;border:none;padding:4px 11px;border-radius:2px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;}
+.edit-notice{display:none;margin-top:9px;font-size:0.69rem;color:var(--gold);padding:7px 11px;background:rgba(201,160,85,0.08);border:1px solid var(--gdim);border-radius:2px;}
 
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.field-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-
-.char-hint{font-size:0.6rem;color:var(--muted);margin-top:4px;text-align:right;}
-
-/* Buttons */
-.btn-row{display:flex;gap:12px;margin-top:28px;}
-.btn{
-  font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.16em;
-  text-transform:uppercase;font-weight:500;padding:12px 24px;
-  border-radius:2px;cursor:pointer;border:none;transition:all 0.2s;
-}
-.btn-primary{background:var(--gold);color:#0F0D0B;flex:1;}
-.btn-primary:hover{background:var(--gold-light);}
-.btn-secondary{background:var(--surface2);color:var(--cream);border:1px solid var(--border);}
-.btn-secondary:hover{border-color:var(--gold-dim);}
-.btn-clear{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bg);}
-.btn-clear:hover{border-color:var(--red);}
-
-/* PREVIEW + CODE PANEL */
-.output-panel{display:flex;flex-direction:column;height:calc(100vh - 57px);position:sticky;top:57px;}
-
-.preview-wrap{flex:1;overflow-y:auto;padding:32px 32px 0;border-bottom:1px solid var(--border);}
-.preview-inner{
-  background:#FAF7F2;border-radius:2px;padding:32px;
-  margin-bottom:24px;
-}
-.prev-tag{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:#B8955A;margin-bottom:10px;}
-.prev-verse{
-  border-left:2px solid #B8955A;padding:12px 16px;
-  background:#F5F0E8;font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:1.05rem;line-height:1.7;
-  color:#3D342C;margin-bottom:18px;
-}
-.prev-ref{font-style:normal;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#B8955A;display:block;margin-top:6px;}
-.prev-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:#1A1612;margin-bottom:16px;line-height:1.25;}
-.prev-p{font-size:0.88rem;line-height:1.85;color:#3D342C;margin-bottom:12px;}
-.prev-prayer{font-style:italic;font-size:0.85rem;color:#6B5B4E;padding:12px 16px;background:#F5F0E8;border-left:2px solid #D4C4AE;margin-top:14px;}
-.prev-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:0.85rem;line-height:1.7;}
-.prev-empty .cross{font-size:2rem;color:var(--border);display:block;margin-bottom:12px;}
-
-/* Code output */
-.code-wrap{padding:0 32px 32px;margin-top:24px;}
-.code-label{
-  font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
-}
-.copy-btn{
-  font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;
-  background:var(--gold);color:#0F0D0B;border:none;padding:4px 12px;
-  border-radius:2px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;
-  transition:background 0.2s;
-}
-.copy-btn:hover{background:var(--gold-light);}
-.code-block{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:2px;padding:16px;font-family:monospace;font-size:0.72rem;
-  line-height:1.65;color:#9A8A7A;white-space:pre-wrap;word-break:break-all;
-  max-height:200px;overflow-y:auto;
-}
-
-/* Instructions box */
-.instructions{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:2px;padding:20px;margin-top:16px;
-}
-.instructions h4{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.step{display:flex;gap:10px;margin-bottom:10px;font-size:0.78rem;color:var(--muted);line-height:1.6;}
-.step-n{
-  width:20px;height:20px;border-radius:50%;background:var(--gold);
-  color:#0F0D0B;font-size:0.62rem;font-weight:600;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-
-/* Toast */
-.toast{
-  position:fixed;bottom:24px;right:24px;
-  background:var(--green);color:#0F0D0B;
-  padding:10px 20px;border-radius:2px;
-  font-size:0.75rem;font-weight:500;letter-spacing:0.08em;
-  transform:translateY(60px);opacity:0;
-  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);z-index:999;
-}
+/* PREVIEW */
+.prv{background:#FAF7F2;border-radius:2px;padding:22px;margin-bottom:12px;}
+.pv-tag{font-size:0.57rem;letter-spacing:0.19em;text-transform:uppercase;color:#B8955A;margin-bottom:8px;}
+.pv-ord{font-size:0.57rem;letter-spacing:0.14em;color:#B8955A;text-transform:uppercase;margin-bottom:5px;}
+.pv-verse{border-left:2px solid #B8955A;padding:9px 13px;background:#F5F0E8;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.96rem;line-height:1.7;color:#3D342C;margin-bottom:13px;}
+.pv-ref{font-style:normal;font-size:0.59rem;letter-spacing:0.13em;text-transform:uppercase;color:#B8955A;display:block;margin-top:4px;}
+.pv-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#1A1612;margin-bottom:11px;line-height:1.25;}
+.pv-p{font-size:0.82rem;line-height:1.85;color:#3D342C;margin-bottom:9px;}
+.pv-prayer{font-style:italic;font-size:0.79rem;color:#6B5B4E;padding:9px 13px;background:#F5F0E8;border-left:2px solid #D4C4AE;margin-top:9px;}
+.pv-empty{text-align:center;padding:32px 14px;color:var(--muted);font-size:0.79rem;line-height:1.8;}
+.clabel{font-size:0.56rem;letter-spacing:0.19em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+.cblock{background:var(--sur2);border:1px solid var(--bdr);border-radius:2px;padding:11px;font-family:monospace;font-size:0.67rem;line-height:1.6;color:#9A8A7A;white-space:pre-wrap;word-break:break-all;max-height:130px;overflow-y:auto;}
+.toast{position:fixed;bottom:16px;right:16px;padding:8px 15px;border-radius:2px;font-size:0.72rem;font-weight:500;letter-spacing:0.08em;transform:translateY(50px);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);z-index:999;}
 .toast.show{transform:translateY(0);opacity:1;}
-
-@media(max-width:900px){
-  .layout{grid-template-columns:1fr;}
-  .output-panel{position:static;height:auto;}
-}
+@media(max-width:840px){.ed-layout{grid-template-columns:1fr;}.op{max-height:none;}}
 </style>
 </head>
 <body>
@@ -168,270 +105,354 @@ textarea{line-height:1.7;min-height:90px;}
     <span class="brand-cross">✝</span>
     <div>
       <div class="brand-name">El Blog de Pedro Lavado</div>
-      <div class="brand-sub">Panel de administración · Devocionales</div>
+      <div class="brand-sub">Panel de administración</div>
     </div>
   </div>
-  <a href="index.html" class="view-blog" target="_blank">Ver blog →</a>
+  <div class="tbar-r">
+    <span id="art-counter" style="font-size:0.62rem;color:var(--muted)">0 artículos</span>
+    <a href="index.html" class="view-blog" target="_blank">Ver blog →</a>
+  </div>
 </header>
 
-<div class="layout">
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('nuevo',this)">✝ Nuevo artículo</button>
+  <button class="tab" onclick="switchTab('articulos',this)">Gestionar artículos</button>
+  <button class="tab" onclick="switchTab('exportar',this)">Exportar JSON</button>
+</div>
 
-  <!-- FORM -->
-  <div class="form-panel">
-
-    <div class="section-label">Datos del devocional</div>
-
-    <div class="field-row">
+<!-- TAB: NUEVO -->
+<div id="tab-nuevo" class="panel active">
+<div class="ed-layout">
+  <div class="fp">
+    <div class="slabel">Identificación</div>
+    <div class="frow3">
       <div class="field">
-        <label>Fecha de publicación</label>
-        <input type="date" id="f-fecha" oninput="updatePreview()">
+        <label>Fecha</label>
+        <input type="date" id="f-fecha" oninput="upPrev()">
       </div>
       <div class="field">
-        <label>Categoría / Tema</label>
-        <select id="f-tag" onchange="updatePreview()">
-          <option value="fe">Fe</option>
-          <option value="gracia">Gracia</option>
-          <option value="esperanza">Esperanza</option>
-          <option value="amor">Amor</option>
-          <option value="oracion">Oración</option>
-          <option value="perdon">Perdón</option>
-          <option value="identidad">Identidad en Cristo</option>
-          <option value="provision">Provisión</option>
-          <option value="paz">Paz</option>
-          <option value="sabiduria">Sabiduría</option>
-          <option value="fidelidad">Fidelidad</option>
-          <option value="fortaleza">Fortaleza</option>
-          <option value="gratitud">Gratitud</option>
-          <option value="perseverancia">Perseverancia</option>
+        <label>Orden del día</label>
+        <select id="f-orden" oninput="upPrev()">
+          <option value="1">1° del día</option>
+          <option value="2">2° del día</option>
+          <option value="3">3° del día</option>
+          <option value="4">4° del día</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Categoría</label>
+        <select id="f-tag" onchange="upPrev()">
+          <option value="fe">Fe</option><option value="gracia">Gracia</option>
+          <option value="esperanza">Esperanza</option><option value="amor">Amor</option>
+          <option value="oracion">Oración</option><option value="perdon">Perdón</option>
+          <option value="identidad">Identidad en Cristo</option><option value="provision">Provisión</option>
+          <option value="paz">Paz</option><option value="sabiduria">Sabiduría</option>
+          <option value="fidelidad">Fidelidad</option><option value="fortaleza">Fortaleza</option>
+          <option value="gratitud">Gratitud</option><option value="perseverancia">Perseverancia</option>
         </select>
       </div>
     </div>
-
-    <div class="field-row">
+    <div class="frow">
       <div class="field">
         <label>Versículo principal</label>
-        <input type="text" id="f-versiculo" placeholder='Porque por fe andamos...' oninput="updatePreview()">
+        <input type="text" id="f-ver" placeholder="Texto del versículo..." oninput="upPrev()">
       </div>
       <div class="field">
-        <label>Referencia bíblica</label>
-        <input type="text" id="f-referencia" placeholder="2 Corintios 5:7" oninput="updatePreview()">
+        <label>Referencia</label>
+        <input type="text" id="f-ref" placeholder="Juan 3:16" oninput="upPrev()">
       </div>
     </div>
-
     <div class="field">
       <label>Título del devocional</label>
-      <input type="text" id="f-titulo" placeholder="Un título evocador y profundo..." oninput="updatePreview()">
+      <input type="text" id="f-tit" placeholder="Un título evocador y profundo..." oninput="upPrev()">
     </div>
-
-    <div class="section-label" style="margin-top:8px;">Cuerpo del sermón</div>
-
+    <div class="slabel" style="margin-top:4px;">Contenido del sermón</div>
     <div class="field">
       <label>Párrafo 1 — Reflexión bíblica</label>
-      <textarea id="f-p1" placeholder="Introduce el tema desde la Escritura, el contexto del pasaje y la verdad central del devocional..." rows="4" oninput="updatePreview();countChars(this,'c1')"></textarea>
-      <div class="char-hint" id="c1">0 palabras</div>
+      <textarea id="f-p1" placeholder="Introduce el tema desde la Escritura..." rows="3" oninput="upPrev();wc(this,'w1')"></textarea>
+      <div class="wc" id="w1">0 palabras</div>
     </div>
-
     <div class="field">
       <label>Párrafo 2 — Aplicación práctica</label>
-      <textarea id="f-p2" placeholder="¿Cómo se vive esta verdad hoy? Conecta con la realidad del lector, situaciones concretas de fe..." rows="4" oninput="updatePreview();countChars(this,'c2')"></textarea>
-      <div class="char-hint" id="c2">0 palabras</div>
+      <textarea id="f-p2" placeholder="¿Cómo se vive esta verdad hoy?" rows="3" oninput="upPrev();wc(this,'w2')"></textarea>
+      <div class="wc" id="w2">0 palabras</div>
     </div>
-
     <div class="field">
       <label>Párrafo 3 — Cierre y aliento</label>
-      <textarea id="f-p3" placeholder="Cierra con esperanza, un llamado a la acción o una promesa de la Palabra que el lector pueda llevar..." rows="4" oninput="updatePreview();countChars(this,'c3')"></textarea>
-      <div class="char-hint" id="c3">0 palabras</div>
+      <textarea id="f-p3" placeholder="Cierra con esperanza y un llamado..." rows="3" oninput="upPrev();wc(this,'w3')"></textarea>
+      <div class="wc" id="w3">0 palabras</div>
     </div>
-
     <div class="field">
       <label>Oración final</label>
-      <textarea id="f-oracion" placeholder="Una oración breve y personal que el lector pueda hacer suya... Amén." rows="3" oninput="updatePreview();countChars(this,'co')"></textarea>
-      <div class="char-hint" id="co">0 palabras</div>
+      <textarea id="f-ora" placeholder="Una oración breve... Amén." rows="2" oninput="upPrev();wc(this,'wo')"></textarea>
+      <div class="wc" id="wo">0 palabras</div>
     </div>
-
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="generateCode()">✝ Generar código</button>
-      <button class="btn btn-secondary" onclick="fillExample()">Ejemplo</button>
-      <button class="btn btn-clear" onclick="clearAll()">Limpiar</button>
+      <button class="btn btn-p" onclick="saveArt()">✝ Guardar artículo</button>
+      <button class="btn btn-s" onclick="fillEx()">Ejemplo</button>
+      <button class="btn btn-d" onclick="clearFrm()">Limpiar</button>
     </div>
-
+    <div class="edit-notice" id="edit-notice">✏️ Editando artículo existente — al guardar se actualizará</div>
   </div>
-
-  <!-- PREVIEW + CODE -->
-  <div class="output-panel">
-
-    <div class="preview-wrap">
-      <div class="section-label" style="padding:0 0 0 0;margin-bottom:16px;">Vista previa en tiempo real</div>
-      <div class="preview-inner" id="preview-box">
-        <div class="prev-empty">
-          <span class="cross">✝</span>
-          Completa el formulario de la izquierda<br>y verás el devocional aquí en tiempo real
-        </div>
-      </div>
+  <div class="op">
+    <div class="prev-scroll">
+      <div class="slabel">Vista previa</div>
+      <div class="prv" id="prv-box"><div class="pv-empty">✝<br><br>Completa el formulario<br>y verás la vista previa aquí</div></div>
     </div>
-
-    <div class="code-wrap">
-      <div class="code-label">
-        <span>Código listo para pegar en index.html</span>
-        <button class="copy-btn" onclick="copyCode()" id="copy-btn">Copiar</button>
-      </div>
-      <div class="code-block" id="code-output">// Aquí aparecerá el bloque de código
-// después de completar el formulario
-// y presionar "Generar código"</div>
-
-      <div class="instructions">
-        <h4>Cómo publicar en tu blog</h4>
-        <div class="step"><div class="step-n">1</div><span>Copia el código generado arriba</span></div>
-        <div class="step"><div class="step-n">2</div><span>Entra a github.com → tu repositorio → clic en <strong style="color:var(--cream)">index.html</strong></span></div>
-        <div class="step"><div class="step-n">3</div><span>Clic en el lápiz ✏️ para editar · busca la línea <code style="color:var(--gold)">const devocionales = [</code></span></div>
-        <div class="step"><div class="step-n">4</div><span>Pega el código justo después del corchete <code style="color:var(--gold)">[</code> (al inicio del array)</span></div>
-        <div class="step"><div class="step-n">5</div><span>Clic en <strong style="color:var(--cream)">Commit changes</strong> · en 2 min aparece en tu web</span></div>
-      </div>
+    <div class="code-sec">
+      <div class="clabel"><span>Código del artículo</span><button class="cpybtn" onclick="cpyCur()">Copiar</button></div>
+      <div class="cblock" id="code-out">// Guarda el artículo para ver su código</div>
     </div>
-
   </div>
+</div>
+</div>
+
+<!-- TAB: GESTIONAR -->
+<div id="tab-articulos" class="panel">
+<div class="art-layout">
+  <div class="art-toolbar">
+    <input class="srch" type="text" placeholder="Buscar por título, versículo o referencia..." oninput="renderTbl()">
+    <input class="fdate" type="date" onchange="renderTbl()" id="flt-date" title="Filtrar por fecha">
+    <select class="ftag" onchange="renderTbl()" id="flt-tag">
+      <option value="">Todas las categorías</option>
+      <option value="fe">Fe</option><option value="gracia">Gracia</option>
+      <option value="esperanza">Esperanza</option><option value="amor">Amor</option>
+      <option value="oracion">Oración</option><option value="perdon">Perdón</option>
+      <option value="identidad">Identidad en Cristo</option><option value="provision">Provisión</option>
+      <option value="paz">Paz</option><option value="sabiduria">Sabiduría</option>
+      <option value="fidelidad">Fidelidad</option><option value="fortaleza">Fortaleza</option>
+      <option value="gratitud">Gratitud</option><option value="perseverancia">Perseverancia</option>
+    </select>
+    <span id="tbl-count" style="font-size:0.63rem;letter-spacing:0.11em;color:var(--muted);text-transform:uppercase;white-space:nowrap;"></span>
+  </div>
+  <table class="art-tbl">
+    <thead><tr><th>#</th><th>Fecha</th><th>Orden</th><th>Categoría</th><th>Título</th><th>Referencia</th><th>Acciones</th></tr></thead>
+    <tbody id="art-tbody"><tr><td colspan="7"><div class="no-art">No hay artículos aún.<br>Crea tu primer devocional en "Nuevo artículo".</div></td></tr></tbody>
+  </table>
+</div>
+</div>
+
+<!-- TAB: EXPORTAR -->
+<div id="tab-exportar" class="panel">
+<div class="json-layout">
+  <div class="warn">⚠️ Cada vez que guardes un artículo nuevo o edites uno existente, descarga el JSON actualizado y súbelo a GitHub reemplazando el archivo <code>devocionales.json</code> anterior.</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="slabel" style="margin:0;flex:1;">devocionales.json — listo para subir a GitHub</div>
+    <div style="display:flex;gap:8px;margin-left:14px;">
+      <button class="cpybtn" onclick="cpyJSON()">Copiar JSON</button>
+      <button class="cpybtn" style="background:var(--gbg);color:var(--grn);border:1px solid var(--grn);" onclick="downloadJSON()">Descargar JSON</button>
+    </div>
+  </div>
+  <div class="json-box" id="json-out">// Aún no tienes artículos guardados.</div>
+  <div class="inst-box">
+    <h3>Cómo publicar — flujo completo</h3>
+    <div class="ist"><div class="isn">1</div><span>Crea o edita artículos en este panel → presiona <strong style="color:var(--cream)">"Descargar JSON"</strong></span></div>
+    <div class="ist"><div class="isn">2</div><span>Ve a <code>github.com/pericogithub70/pericogithub70.github.io</code></span></div>
+    <div class="ist"><div class="isn">3</div><span>Haz clic en <code>devocionales.json</code> → lápiz ✏️ → en la esquina superior derecha clic en <strong style="color:var(--cream)">"Upload file"</strong> o borra el contenido y pega el JSON copiado</span></div>
+    <div class="ist"><div class="isn">4</div><span>Clic en <strong style="color:var(--cream)">Commit changes</strong> → en 2 minutos el blog está actualizado</span></div>
+    <div class="ist"><div class="isn">5</div><span>El <code>index.html</code> leerá automáticamente el nuevo <code>devocionales.json</code> sin necesitar cambios</span></div>
+  </div>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const tagLabels = {
-  fe:'Fe', gracia:'Gracia', esperanza:'Esperanza', amor:'Amor',
-  oracion:'Oración', perdon:'Perdón', identidad:'Identidad en Cristo',
-  provision:'Provisión', paz:'Paz', sabiduria:'Sabiduría',
-  fidelidad:'Fidelidad', fortaleza:'Fortaleza', gratitud:'Gratitud',
-  perseverancia:'Perseverancia'
-};
+const TL={fe:'Fe',gracia:'Gracia',esperanza:'Esperanza',amor:'Amor',oracion:'Oración',perdon:'Perdón',identidad:'Identidad en Cristo',provision:'Provisión',paz:'Paz',sabiduria:'Sabiduría',fidelidad:'Fidelidad',fortaleza:'Fortaleza',gratitud:'Gratitud',perseverancia:'Perseverancia'};
 
+// ── ESTADO: guardado en localStorage con IDs numéricos auto-incrementales ──
+let arts = JSON.parse(localStorage.getItem('plblog3')||'[]');
+let editId = null, curCode = '', nextId = 0;
+
+function computeNextId(){
+  nextId = arts.length ? Math.max(...arts.map(a=>a.id)) + 1 : 1;
+}
+computeNextId();
+
+function persist(){ localStorage.setItem('plblog3', JSON.stringify(arts)); computeNextId(); upCounter(); renderTbl(); buildJSON(); }
 function g(id){ return document.getElementById(id); }
 
-function countChars(el, cid){
-  const words = el.value.trim().split(/\s+/).filter(w=>w).length;
-  g(cid).textContent = words + (words === 1 ? ' palabra' : ' palabras');
+// ── TABS ──
+function switchTab(n,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  g('tab-'+n).classList.add('active'); btn.classList.add('active');
+  if(n==='articulos') renderTbl();
+  if(n==='exportar') buildJSON();
 }
 
-function updatePreview(){
-  const versiculo  = g('f-versiculo').value.trim();
-  const referencia = g('f-referencia').value.trim();
-  const titulo     = g('f-titulo').value.trim();
-  const tag        = g('f-tag').value;
-  const p1         = g('f-p1').value.trim();
-  const p2         = g('f-p2').value.trim();
-  const p3         = g('f-p3').value.trim();
-  const oracion    = g('f-oracion').value.trim();
+// ── WORD COUNT ──
+function wc(el,cid){ const w=el.value.trim().split(/\s+/).filter(x=>x).length; g(cid).textContent=w+(w===1?' palabra':' palabras'); }
 
-  if(!titulo && !versiculo && !p1){
-    g('preview-box').innerHTML = `<div class="prev-empty"><span class="cross">✝</span>Completa el formulario de la izquierda<br>y verás el devocional aquí en tiempo real</div>`;
-    return;
+// ── PREVIEW ──
+function upPrev(){
+  const v=g('f-ver').value.trim(), r=g('f-ref').value.trim();
+  const t=g('f-tit').value.trim(), tag=g('f-tag').value;
+  const ord=parseInt(g('f-orden').value);
+  const p1=g('f-p1').value.trim(), p2=g('f-p2').value.trim();
+  const p3=g('f-p3').value.trim(), o=g('f-ora').value.trim();
+  if(!t&&!v&&!p1){ g('prv-box').innerHTML='<div class="pv-empty">✝<br><br>Completa el formulario<br>y verás la vista previa aquí</div>'; return; }
+  g('prv-box').innerHTML=`
+    ${ord>1?`<div class="pv-ord">${ord}° artículo del día</div>`:''}
+    <div class="pv-tag">✝ ${TL[tag]||tag}</div>
+    ${v?`<div class="pv-verse">"${v}"${r?`<span class="pv-ref">${r}</span>`:''}</div>`:''}
+    ${t?`<div class="pv-title">${t}</div>`:''}
+    ${p1?`<div class="pv-p">${p1}</div>`:''}
+    ${p2?`<div class="pv-p">${p2}</div>`:''}
+    ${p3?`<div class="pv-p">${p3}</div>`:''}
+    ${o?`<div class="pv-prayer">🙏 ${o}</div>`:''}`;
+}
+
+// ── SAVE ──
+function saveArt(){
+  const fecha=g('f-fecha').value, v=g('f-ver').value.trim();
+  const t=g('f-tit').value.trim(), p1=g('f-p1').value.trim();
+  if(!fecha||!t||!v||!p1){ toast('Completa: fecha, versículo, título y párrafo 1',true); return; }
+  const art={
+    id: editId !== null ? editId : nextId,
+    fecha, orden:parseInt(g('f-orden').value),
+    tag:g('f-tag').value, tagLabel:TL[g('f-tag').value],
+    versiculo:v, referencia:g('f-ref').value.trim(),
+    titulo:t,
+    cuerpo:[p1,g('f-p2').value.trim(),g('f-p3').value.trim()].filter(x=>x),
+    oracion:g('f-ora').value.trim()
+  };
+  if(editId !== null){
+    const i=arts.findIndex(a=>a.id===editId);
+    if(i>-1) arts[i]=art;
+    editId=null; g('edit-notice').style.display='none';
+    toast('✝ Artículo #'+art.id+' actualizado');
+  } else {
+    arts.push(art);
+    toast('✝ Artículo #'+art.id+' guardado');
   }
-
-  g('preview-box').innerHTML = `
-    <div class="prev-tag">✝ ${tagLabels[tag] || tag}</div>
-    ${versiculo ? `<div class="prev-verse">"${versiculo}"${referencia ? `<span class="prev-ref">${referencia}</span>` : ''}</div>` : ''}
-    ${titulo ? `<div class="prev-title">${titulo}</div>` : ''}
-    ${p1 ? `<div class="prev-p">${p1}</div>` : ''}
-    ${p2 ? `<div class="prev-p">${p2}</div>` : ''}
-    ${p3 ? `<div class="prev-p">${p3}</div>` : ''}
-    ${oracion ? `<div class="prev-prayer">🙏 ${oracion}</div>` : ''}
-  `;
+  curCode=JSON.stringify(art,null,2);
+  g('code-out').textContent=curCode;
+  persist(); clearFrm(false);
 }
 
-function generateCode(){
-  const fecha      = g('f-fecha').value;
-  const tag        = g('f-tag').value;
-  const versiculo  = g('f-versiculo').value.trim();
-  const referencia = g('f-referencia').value.trim();
-  const titulo     = g('f-titulo').value.trim();
-  const p1         = g('f-p1').value.trim();
-  const p2         = g('f-p2').value.trim();
-  const p3         = g('f-p3').value.trim();
-  const oracion    = g('f-oracion').value.trim();
-
-  if(!fecha || !titulo || !versiculo || !p1){
-    showToast('Completa al menos: fecha, versículo, título y párrafo 1', true);
-    return;
-  }
-
-  const id = 'dev_' + fecha.replace(/-/g,'');
-  const tagLabel = tagLabels[tag] || tag;
-
-  const code = `{
-  id: ${id},
-  fecha: "${fecha}",
-  tag: "${tag}",
-  tagLabel: "${tagLabel}",
-  versiculo: "${esc(versiculo)}",
-  referencia: "${esc(referencia)}",
-  titulo: "${esc(titulo)}",
-  cuerpo: [
-    "${esc(p1)}",
-    "${esc(p2)}",
-    "${esc(p3)}"
-  ],
-  oracion: "${esc(oracion)}"
-},`;
-
-  g('code-output').textContent = code;
-  showToast('✝ Código generado — cópialo y pégalo en tu index.html');
+// ── CLEAR ──
+function clearFrm(resetEdit=true){
+  ['f-ver','f-ref','f-tit','f-p1','f-p2','f-p3','f-ora'].forEach(id=>g(id).value='');
+  g('f-tag').value='fe'; g('f-orden').value='1';
+  g('f-fecha').value=new Date().toISOString().split('T')[0];
+  ['w1','w2','w3','wo'].forEach(id=>g(id).textContent='0 palabras');
+  if(resetEdit){ editId=null; g('edit-notice').style.display='none'; }
+  upPrev();
 }
 
-function esc(str){
-  return str.replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,' ');
+// ── EXAMPLE ──
+function fillEx(){
+  g('f-fecha').value=new Date().toISOString().split('T')[0];
+  g('f-tag').value='esperanza'; g('f-orden').value='1';
+  g('f-ver').value='Porque yo sé los planes que tengo para vosotros, dice el Señor, planes de paz y no de calamidad, para daros un futuro y una esperanza.';
+  g('f-ref').value='Jeremías 29:11';
+  g('f-tit').value='El futuro está en Sus manos: la esperanza que no defrauda';
+  g('f-p1').value='Jeremías escribió estas palabras a un pueblo en cautiverio, lejos de su tierra. El contexto era devastador: el templo destruido, la ciudad en ruinas. Y sin embargo, es en ese momento de mayor oscuridad donde Dios irrumpe con una de las promesas más poderosas de toda la Escritura.';
+  g('f-p2').value='¿Cuántas veces hemos sentido que el futuro se ha cerrado? Una enfermedad inesperada, un proyecto que no salió, una relación rota. Esta promesa nos llama a confiar en los planes de Alguien que ve más allá de nuestra circunstancia. La esperanza bíblica no es optimismo ingenuo; es certeza anclada en el carácter de Dios.';
+  g('f-p3').value='Hoy recuerda: Dios no improvisa. Sus planes para ti fueron trazados antes de que nacieras, y ninguna tormenta los puede borrar. El mismo Dios que sacó a Israel del cautiverio puede sacarte a ti de cualquier situación. Confía. El futuro está en las mejores manos posibles.';
+  g('f-ora').value='Señor, cuando no puedo ver el horizonte, ayúdame a confiar en que Tú sí lo ves. Que mi esperanza esté puesta en Tu carácter fiel. Amén.';
+  ['f-p1','f-p2','f-p3','f-ora'].forEach((fid,i)=>wc(g(fid),['w1','w2','w3','wo'][i]));
+  upPrev(); toast('Ejemplo cargado');
 }
 
-function copyCode(){
-  const code = g('code-output').textContent;
-  if(code.startsWith('//')){
-    showToast('Primero genera el código con el botón "Generar código"', true);
-    return;
-  }
-  navigator.clipboard.writeText(code).then(()=>{
-    g('copy-btn').textContent = '✓ Copiado';
-    showToast('✝ Código copiado al portapapeles');
-    setTimeout(()=>{ g('copy-btn').textContent = 'Copiar'; }, 2500);
-  });
+function cpyCur(){
+  if(!curCode){ toast('Guarda un artículo primero',true); return; }
+  navigator.clipboard.writeText(curCode).then(()=>toast('Código copiado'));
 }
 
-function fillExample(){
-  const today = new Date().toISOString().split('T')[0];
-  g('f-fecha').value      = today;
-  g('f-tag').value        = 'esperanza';
-  g('f-versiculo').value  = 'Porque yo sé los planes que tengo para vosotros, dice el Señor, planes de paz y no de calamidad, para daros un futuro y una esperanza.';
-  g('f-referencia').value = 'Jeremías 29:11';
-  g('f-titulo').value     = 'El futuro está en Sus manos: la esperanza que no defrauda';
-  g('f-p1').value         = 'Jeremías escribió estas palabras a un pueblo en cautiverio, lejos de su tierra, sin aparente esperanza de retorno. El contexto es devastador: el templo destruido, la ciudad en ruinas, la nación dispersa. Y sin embargo, es precisamente en ese momento de mayor oscuridad donde Dios irrumpe con una de las promesas más poderosas de toda la Escritura. No es una promesa para tiempos de bonanza, sino para tiempos de crisis.';
-  g('f-p2').value         = '¿Cuántas veces hemos sentido que el futuro se ha cerrado delante de nosotros? Una enfermedad inesperada, un proyecto que no salió, una relación rota, una puerta que parecía definitivamente clausurada. En esos momentos, esta promesa nos llama a hacer lo más difícil: confiar en los planes de Alguien que ve más allá de nuestra circunstancia presente. La esperanza bíblica no es optimismo ingenuo; es certeza anclada en el carácter de Dios.';
-  g('f-p3').value         = 'Hoy, cualquiera sea la circunstancia que enfrentas, recuerda: Dios no improvisa. Sus planes para ti fueron trazados antes de que nacieras, y ninguna tormenta en tu vida los puede borrar. El mismo Dios que sacó a Israel del cautiverio puede sacarte a ti de cualquier situación que hoy te tenga atado. Confía. El futuro está en las mejores manos posibles.';
-  g('f-oracion').value    = 'Señor, cuando no puedo ver el horizonte, ayúdame a confiar en que Tú sí lo ves. Que mi esperanza no esté puesta en las circunstancias, sino en Tu carácter fiel e inmutable. Gracias porque Tus planes para mí son buenos. Amén.';
-
-  updatePreview();
-  ['f-p1','f-p2','f-p3','f-oracion'].forEach((fid,i)=>{
-    const cids = ['c1','c2','c3','co'];
-    countChars(g(fid), cids[i]);
-  });
-  showToast('Ejemplo cargado — revisa el formulario');
+// ── TABLE ──
+function renderTbl(){
+  const srch=(document.querySelector('.srch')||{value:''}).value.toLowerCase();
+  const fd=(g('flt-date')||{value:''}).value;
+  const ft=(g('flt-tag')||{value:''}).value;
+  let f=arts.filter(a=>{
+    const ms=!srch||(a.titulo.toLowerCase().includes(srch)||a.versiculo.toLowerCase().includes(srch)||(a.referencia||'').toLowerCase().includes(srch));
+    return ms&&(!fd||a.fecha===fd)&&(!ft||a.tag===ft);
+  }).sort((a,b)=>b.fecha.localeCompare(a.fecha)||(a.orden-b.orden));
+  g('tbl-count').textContent=f.length+' resultado'+(f.length!==1?'s':'');
+  if(!f.length){ g('art-tbody').innerHTML='<tr><td colspan="7"><div class="no-art">Sin resultados para ese filtro.</div></td></tr>'; return; }
+  g('art-tbody').innerHTML=f.map(a=>`<tr>
+    <td style="font-size:0.71rem;color:var(--muted)">${a.id}</td>
+    <td class="tddate">${fmtD(a.fecha)}</td>
+    <td style="font-size:0.73rem;color:var(--muted)">${a.orden}°</td>
+    <td><span class="tag-pill">${a.tagLabel||a.tag}</span></td>
+    <td class="tdtitle">${a.titulo}</td>
+    <td style="font-size:0.71rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.referencia||''}</td>
+    <td><div class="acts">
+      <button class="ab ab-edit" onclick="editArt(${a.id})">✏️ Editar</button>
+      <button class="ab ab-dup" onclick="dupArt(${a.id})">Duplicar</button>
+      <button class="ab ab-del" onclick="delArt(${a.id})">Eliminar</button>
+    </div></td>
+  </tr>`).join('');
 }
 
-function clearAll(){
-  ['f-fecha','f-versiculo','f-referencia','f-titulo','f-p1','f-p2','f-p3','f-oracion'].forEach(id=>{
-    g(id).value = '';
-  });
-  g('f-tag').value = 'fe';
-  ['c1','c2','c3','co'].forEach(id=>{ g(id).textContent = '0 palabras'; });
-  g('code-output').textContent = '// Aquí aparecerá el bloque de código\n// después de completar el formulario\n// y presionar "Generar código"';
-  updatePreview();
+function fmtD(d){ if(!d)return''; const[y,m,dy]=d.split('-'); const ms=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']; return`${dy} ${ms[parseInt(m)-1]} ${y}`; }
+
+function editArt(id){
+  const a=arts.find(x=>x.id===id); if(!a)return;
+  editId=id;
+  g('f-fecha').value=a.fecha; g('f-orden').value=a.orden||1; g('f-tag').value=a.tag;
+  g('f-ver').value=a.versiculo; g('f-ref').value=a.referencia||'';
+  g('f-tit').value=a.titulo;
+  g('f-p1').value=a.cuerpo[0]||''; g('f-p2').value=a.cuerpo[1]||''; g('f-p3').value=a.cuerpo[2]||'';
+  g('f-ora').value=a.oracion||'';
+  ['f-p1','f-p2','f-p3','f-ora'].forEach((fid,i)=>wc(g(fid),['w1','w2','w3','wo'][i]));
+  g('edit-notice').style.display='block'; upPrev();
+  switchTab('nuevo',document.querySelectorAll('.tab')[0]);
+  window.scrollTo(0,0); toast('✏️ Artículo #'+id+' cargado para editar');
 }
 
-function showToast(msg, isError=false){
-  const t = g('toast');
-  t.textContent = msg;
-  t.style.background = isError ? 'var(--red)' : 'var(--green)';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 3000);
+function dupArt(id){
+  const a=arts.find(x=>x.id===id); if(!a)return;
+  const dup={...a, id:nextId, orden:a.orden+1, fecha:new Date().toISOString().split('T')[0]};
+  arts.push(dup); persist(); toast('Artículo duplicado como #'+dup.id+' — ajusta fecha y orden');
 }
 
-// Set today's date by default
-g('f-fecha').value = new Date().toISOString().split('T')[0];
+function delArt(id){
+  if(!confirm('¿Eliminar artículo #'+id+'? No se puede deshacer.'))return;
+  arts=arts.filter(a=>a.id!==id); persist(); toast('Artículo eliminado');
+}
+
+// ── JSON EXPORT ──
+function buildJSON(){
+  if(!arts.length){ g('json-out').textContent='// Aún no tienes artículos guardados.'; return; }
+  const sorted=[...arts].sort((a,b)=>b.fecha.localeCompare(a.fecha)||(a.orden-b.orden));
+  g('json-out').textContent=JSON.stringify(sorted,null,2);
+}
+
+function cpyJSON(){
+  buildJSON();
+  const txt=g('json-out').textContent;
+  if(txt.startsWith('//')){ toast('No tienes artículos aún',true); return; }
+  navigator.clipboard.writeText(txt).then(()=>toast('JSON copiado al portapapeles'));
+}
+
+function downloadJSON(){
+  buildJSON();
+  const txt=g('json-out').textContent;
+  if(txt.startsWith('//')){ toast('No tienes artículos aún',true); return; }
+  const a=document.createElement('a');
+  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(txt);
+  a.download='devocionales.json';
+  a.click();
+  toast('✝ devocionales.json descargado');
+}
+
+// ── COUNTER ──
+function upCounter(){ g('art-counter').textContent=arts.length+' artículo'+(arts.length!==1?'s':''); }
+
+// ── TOAST ──
+function toast(msg,err=false){
+  const t=g('toast'); t.textContent=msg;
+  t.style.background=err?'var(--red)':'var(--grn)';
+  t.style.color=err?'#fff':'#0F0D0B';
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── INIT ──
+g('f-fecha').value=new Date().toISOString().split('T')[0];
+upCounter(); renderTbl();
 </script>
 </body>
 </html>

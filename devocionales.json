@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "fecha": "2025-07-12",
+    "orden": 1,
+    "tag": "fe",
+    "tagLabel": "Fe",
+    "versiculo": "Porque por fe andamos, no por vista.",
+    "referencia": "2 Corintios 5:7",
+    "titulo": "Caminar sin ver: el desafío de la fe auténtica",
+    "cuerpo": [
+      "Hay momentos en la vida donde el camino desaparece bajo nuestros pies y todo lo que nos queda es dar el siguiente paso sin certeza de que el suelo estará ahí. Es en esos momentos donde la fe deja de ser un concepto teológico y se convierte en la única brújula que tenemos.",
+      "El apóstol Pablo no escribió estas palabras desde la comodidad. Las escribió desde prisiones, desde naufragios, desde el rechazo constante. Su fe no era la fe de quien nunca ha dudado, sino la de quien ha dudado, ha temblado, y aun así ha seguido caminando.",
+      "Hoy, si sientes que no ves el camino con claridad, recuerda: la fe no exige visión perfecta. Exige un paso. Solo uno. Y Dios honra ese paso con Su presencia."
+    ],
+    "oracion": "Señor, cuando no puedo ver el horizonte, enséñame a confiar en Tu mano que me guía. Dame la valentía de dar el siguiente paso. Amén."
+  },
+  {
+    "id": 2,
+    "fecha": "2025-07-11",
+    "orden": 1,
+    "tag": "gracia",
+    "tagLabel": "Gracia",
+    "versiculo": "Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios.",
+    "referencia": "Efesios 2:8",
+    "titulo": "La gracia que no se puede ganar",
+    "cuerpo": [
+      "Vivimos en un mundo que nos dice que todo se gana. Que el mérito es la moneda de la vida. Pero el evangelio llega con una declaración que subvierte toda lógica humana: la mayor dádiva que existe no se puede ganar, no se puede comprar, no se puede merecer.",
+      "La gracia de Dios es el regalo más desconcertante de la historia. No porque sea barato, sino porque fue infinitamente costoso para Él y absolutamente gratuito para nosotros. La cruz es la paradoja donde el precio fue pagado por Quien no debía nada.",
+      "Descansa hoy en esa gracia. No tienes que demostrar nada. No tienes que ser suficiente. Solo recibe."
+    ],
+    "oracion": "Padre, gracias porque Tu amor no depende de mi desempeño. Ayúdame a vivir desde la gratitud, no desde el miedo. Amén."
+  },
+  {
+    "id": 3,
+    "fecha": "2025-07-10",
+    "orden": 1,
+    "tag": "esperanza",
+    "tagLabel": "Esperanza",
+    "versiculo": "Y la esperanza no avergüenza; porque el amor de Dios ha sido derramado en nuestros corazones.",
+    "referencia": "Romanos 5:5",
+    "titulo": "Esperanza que no decepciona",
+    "cuerpo": [
+      "La esperanza humana frecuentemente defrauda. Ponemos nuestra confianza en personas, en proyectos, en futuros que imaginamos, y muchas veces el resultado nos deja con el corazón vacío. Pero Pablo habla de una esperanza radicalmente diferente.",
+      "Esta esperanza está anclada no en circunstancias sino en carácter, no en promesas humanas sino en el Dios que es incapaz de mentir. Es una esperanza que ha sobrevivido el fuego de la persecución, las noches más oscuras de la historia y los corazones más quebrantados.",
+      "Si hoy tu corazón está cansado de esperar, recuerda: la espera misma es un acto de fe, y Dios nunca ha llegado tarde a ninguna de Sus promesas."
+    ],
+    "oracion": "Dios de la esperanza, renueva mi confianza en Ti. Que mi corazón descanse en Tus promesas hoy. Amén."
+  }
+]
