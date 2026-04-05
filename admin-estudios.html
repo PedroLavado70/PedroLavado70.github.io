@@ -323,7 +323,7 @@ function setPdfMode(mode, btn){
 function getPdfValue(){
   if(pdfMode==='github'){
     const v = (g('f-pdf-github').value||'').trim();
-    return v ? 'https://pericogithub70.github.io/' + v : '';
+    return v ? 'https://PedroLavado70.github.io/' + v : '';
   }
   return (g('f-pdf-url').value||'').trim();
 }
@@ -456,9 +456,9 @@ function editEst(id){
   g('f-portada').value=a.portada||''; g('f-pags').value=a.paginas||'';
   // PDF
   const pdf=a.pdf||'';
-  if(pdf.includes('pericogithub70.github.io/')){
+  if(pdf.includes('PedroLavado70.github.io/')){
     setPdfMode('github', document.querySelectorAll('.pdf-tab')[1]);
-    g('f-pdf-github').value=pdf.replace('https://pericogithub70.github.io/','');
+    g('f-pdf-github').value=pdf.replace('https://PedroLavado70.github.io/','');
   } else {
     setPdfMode('url', document.querySelectorAll('.pdf-tab')[0]);
     g('f-pdf-url').value=pdf;
