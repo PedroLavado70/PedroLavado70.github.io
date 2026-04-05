@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": 1,
+    "fecha": "2026-04-05",
+    "categoria": "Otro",
+    "titulo": "Un hombre amable",
+    "pasaje": "Antes sed amables unos con otros, misericordiosos, perdonandoos unos a otros, como Dios tambien os perdono a vosotros en Cristo.",
+    "extracto": "breve descripcion x trabajar",
+    "contenido": [
+      "contenido x desarrollar",
+      "contenido 2",
+      "contenido 3"
+    ],
+    "pdf": "https://pericogithub70.github.io/pdfs/Un hombre amable.pdf",
+    "portada": "imagenes/Un hombre amable.jpg",
+    "paginas": null
+  }
+]
