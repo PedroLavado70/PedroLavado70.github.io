@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudios Bíblicos · El Blog de Pedro Lavado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF7F2;--warm-white:#F5F0E8;--ink:#1A1612;--brown-soft:#6B5B4E;--gold:#B8955A;--gold-light:#D4AF78;--separator:#E2D9CC;--tag-bg:#EDE6DB;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.4;}
+header{display:flex;flex-direction:column;align-items:center;padding:52px 24px 36px;border-bottom:1px solid var(--separator);}
+.cross-icon{width:24px;height:24px;margin-bottom:16px;opacity:0.7;animation:fadein 1.2s ease both;}
+.site-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:0.08em;animation:fadein 1.4s ease both;}
+.site-subtitle{font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--brown-soft);margin-top:7px;animation:fadein 1.6s ease both;}
+.site-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:var(--gold);margin-top:9px;animation:fadein 1.8s ease both;}
+.site-nav{display:flex;gap:0;justify-content:center;margin-top:18px;border:1px solid var(--separator);border-radius:2px;overflow:hidden;animation:fadein 2s ease both;}
+.site-nav a{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--brown-soft);text-decoration:none;padding:9px 22px;border-right:1px solid var(--separator);transition:all 0.2s;font-family:'Jost',sans-serif;}
+.site-nav a:last-child{border-right:none;}
+.site-nav a:hover,.site-nav a.active{background:var(--ink);color:var(--cream);}
+
+/* PAGE HERO */
+.page-hero{max-width:780px;margin:60px auto 0;padding:0 24px;text-align:center;animation:slideup 0.8s ease both;}
+.page-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;letter-spacing:0.06em;margin-bottom:12px;}
+.page-hero-sub{font-size:0.8rem;color:var(--brown-soft);line-height:1.8;max-width:520px;margin:0 auto;}
+.page-hero-line{width:60px;height:1px;background:var(--gold);margin:20px auto;}
+
+/* FILTERS */
+.filters-wrap{max-width:1100px;margin:40px auto 0;padding:0 24px;}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.filter-tag{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:6px 16px;border-radius:100px;background:var(--tag-bg);color:var(--brown-soft);cursor:pointer;border:1px solid transparent;transition:all 0.2s;font-family:'Jost',sans-serif;}
+.filter-tag:hover,.filter-tag.active{background:var(--ink);color:var(--cream);}
+.results-count{font-size:0.65rem;letter-spacing:0.12em;color:var(--brown-soft);text-transform:uppercase;margin-top:10px;}
+
+/* GRID */
+.estudios-section{max-width:1100px;margin:32px auto 80px;padding:0 24px;}
+.estudios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+.estudio-card{background:var(--warm-white);border:1px solid var(--separator);border-radius:2px;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s;animation:fadein 0.5s ease both;}
+.estudio-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(26,22,18,0.1);}
+.estudio-cover{width:100%;height:180px;object-fit:cover;display:block;}
+.estudio-cover-ph{width:100%;height:180px;background:#1A1612;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.estudio-cover-ph::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(184,149,90,0.04) 20px,rgba(184,149,90,0.04) 40px);}
+.estudio-cover-ph span{font-size:3rem;color:var(--gold);opacity:0.4;position:relative;z-index:1;}
+.estudio-body{padding:26px 28px 22px;}
+.estudio-cat{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.estudio-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;line-height:1.3;margin-bottom:12px;color:var(--ink);}
+.estudio-pasaje{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.9rem;color:var(--gold);margin-bottom:14px;}
+.estudio-excerpt{font-size:0.83rem;line-height:1.8;color:var(--brown-soft);margin-bottom:18px;}
+.estudio-footer{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--separator);flex-wrap:wrap;gap:10px;}
+.estudio-meta{display:flex;flex-direction:column;gap:3px;}
+.estudio-date{font-size:0.65rem;letter-spacing:0.1em;color:var(--brown-soft);text-transform:uppercase;}
+.estudio-pages{font-size:0.62rem;color:#B0A898;letter-spacing:0.08em;}
+.dl-btn{font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:white;background:var(--ink);border:none;padding:9px 18px;border-radius:1px;cursor:pointer;text-decoration:none;transition:background 0.2s;display:inline-flex;align-items:center;gap:7px;}
+.dl-btn:hover{background:var(--gold);}
+.dl-btn svg{width:13px;height:13px;flex-shrink:0;}
+.ver-btn{font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);background:none;border:1px solid var(--gold-light);padding:9px 18px;border-radius:1px;cursor:pointer;transition:all 0.2s;}
+.ver-btn:hover{background:var(--gold);color:white;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,22,18,0.65);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--cream);border:1px solid var(--separator);max-width:720px;width:100%;max-height:90vh;overflow-y:auto;border-radius:2px;position:relative;animation:slideup 0.3s ease both;}
+.modal-img{width:100%;height:220px;object-fit:cover;display:block;}
+.modal-img-ph{width:100%;height:180px;background:#1A1612;display:flex;align-items:center;justify-content:center;}
+.modal-img-ph span{font-size:3rem;color:var(--gold);opacity:0.35;}
+.modal-body-wrap{padding:36px 44px;}
+.modal-close{position:absolute;top:16px;right:20px;background:rgba(26,22,18,0.5);border:none;font-size:1.2rem;cursor:pointer;color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
+.modal-close:hover{background:var(--ink);}
+.modal-cat{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;line-height:1.2;margin-bottom:8px;}
+.modal-pasaje{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--gold);margin-bottom:20px;}
+.modal-content{font-size:0.9rem;line-height:1.9;color:#3D342C;margin-bottom:24px;}
+.modal-content p+p{margin-top:14px;}
+.modal-actions{display:flex;gap:12px;padding-top:20px;border-top:1px solid var(--separator);flex-wrap:wrap;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:80px 24px;color:var(--brown-soft);}
+.empty-state .cross{font-size:3rem;color:var(--separator);display:block;margin-bottom:16px;}
+.empty-state p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--separator);padding:32px 24px;text-align:center;}
+.footer-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:var(--brown-soft);margin-bottom:8px;}
+.footer-copy{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#B0A898;}
+
+/* TOAST */
+#site-toast{position:fixed;bottom:22px;right:22px;background:#1A1612;color:#C9A055;border:1px solid #7A5F30;padding:11px 18px;border-radius:2px;font-size:0.78rem;letter-spacing:0.08em;z-index:9999;transform:translateY(60px);opacity:0;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);max-width:300px;}
+
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes slideup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.modal-body-wrap{padding:24px 22px;}.estudio-body{padding:20px 20px 16px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="cross-icon" viewBox="0 0 28 28" fill="none">
+    <rect x="11" y="2" width="6" height="24" rx="1" fill="#B8955A"/>
+    <rect x="2" y="9" width="24" height="6" rx="1" fill="#B8955A"/>
+  </svg>
+  <h1 class="site-title">El Blog de Pedro Lavado</h1>
+  <p class="site-subtitle">Devocionales Cristianos &nbsp;·&nbsp; Estudios Bíblicos &nbsp;·&nbsp; Testimonios</p>
+  <p class="site-tagline">Un lugar para compartir nuestra Fe y la Palabra del Señor</p>
+  <nav class="site-nav">
+    <a href="index.html">Devocionales</a>
+    <a href="estudios.html" class="active">Estudios Bíblicos</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <h2 class="page-hero-title">Estudios Bíblicos</h2>
+  <div class="page-hero-line"></div>
+  <p class="page-hero-sub">Materiales de enseñanza para profundizar en la Palabra de Dios. Descarga los estudios en PDF de forma gratuita.</p>
+</div>
+
+<div class="filters-wrap">
+  <div class="filter-bar" id="filter-bar">
+    <button class="filter-tag active" onclick="filtrar('',this)">Todos</button>
+  </div>
+  <p class="results-count" id="results-count"></p>
+</div>
+
+<section class="estudios-section">
+  <div class="estudios-grid" id="estudios-grid">
+    <div class="empty-state" style="grid-column:1/-1;">
+      <span class="cross">✝</span>
+      <p>Cargando estudios bíblicos...</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-verse">"Toda la Escritura es inspirada por Dios, y útil para enseñar." — 2 Timoteo 3:16</p>
+  <p class="footer-copy">© 2026 El Blog de Pedro Lavado · Con amor y fe</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<div id="site-toast"></div>
+
+<script>
+const CATEGORIAS_DEFAULT = ['Antiguo Testamento','Nuevo Testamento','Epístolas','Evangelios','Profetas','Doctrina','Vida Cristiana'];
+
+// ── DATOS BASE (vacío al inicio, se llena desde estudios.json) ──
+let estudios = [];
+let filtroActivo = '';
+
+async function loadData() {
+  try {
+    const res = await fetch('estudios.json?v=' + Date.now());
+    if (res.ok) {
+      const d = await res.json();
+      if (Array.isArray(d) && d.length) estudios = d;
+    }
+  } catch(e) {}
+  estudios.sort((a,b) => b.fecha.localeCompare(a.fecha));
+  buildFilters();
+  render();
+}
+
+function buildFilters() {
+  const cats = [...new Set(estudios.map(e => e.categoria).filter(Boolean))];
+  const bar = document.getElementById('filter-bar');
+  bar.innerHTML = `<button class="filter-tag active" onclick="filtrar('',this)">Todos</button>` +
+    cats.map(c => `<button class="filter-tag" onclick="filtrar('${c}',this)">${c}</button>`).join('');
+}
+
+function filtrar(cat, btn) {
+  filtroActivo = cat;
+  document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  const list = filtroActivo ? estudios.filter(e => e.categoria === filtroActivo) : estudios;
+  const count = document.getElementById('results-count');
+  count.textContent = list.length + ' estudio' + (list.length !== 1 ? 's' : '');
+
+  if (!list.length) {
+    document.getElementById('estudios-grid').innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1;">
+        <span class="cross">✝</span>
+        <p>Próximamente los primeros estudios bíblicos.<br>¡Vuelve pronto!</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('estudios-grid').innerHTML = list.map((e,i) => `
+    <div class="estudio-card" style="animation-delay:${i*0.06}s">
+      ${e.portada
+        ? `<img class="estudio-cover" src="${e.portada}" alt="${e.titulo}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=estudio-cover-ph><span>✝</span></div>'">`
+        : `<div class="estudio-cover-ph"><span>✝</span></div>`}
+      <div class="estudio-body">
+        <p class="estudio-cat">✝ ${e.categoria||'Estudio'}</p>
+        <h3 class="estudio-title">${e.titulo}</h3>
+        ${e.pasaje ? `<p class="estudio-pasaje">${e.pasaje}</p>` : ''}
+        <p class="estudio-excerpt">${e.extracto||''}</p>
+        <div class="estudio-footer">
+          <div class="estudio-meta">
+            <span class="estudio-date">${fmtDate(e.fecha)}</span>
+            ${e.paginas ? `<span class="estudio-pages">${e.paginas} páginas</span>` : ''}
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="ver-btn" onclick="openModal(${e.id})">Ver más</button>
+            ${e.pdf ? `<a class="dl-btn" href="${e.pdf}" download target="_blank">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M8 2v9M4 8l4 4 4-4M2 14h12"/>
+              </svg>
+              PDF</a>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function openModal(id) {
+  const e = estudios.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('modal-inner').innerHTML = `
+    ${e.portada
+      ? `<img class="modal-img" src="${e.portada}" alt="${e.titulo}" onerror="this.style.display='none'">`
+      : `<div class="modal-img-ph"><span>✝</span></div>`}
+    <div class="modal-body-wrap">
+      <p class="modal-cat">✝ ${e.categoria||'Estudio Bíblico'} · ${fmtDate(e.fecha)}</p>
+      <h2 class="modal-title">${e.titulo}</h2>
+      ${e.pasaje ? `<p class="modal-pasaje">"${e.pasaje}"</p>` : ''}
+      <div class="modal-content">
+        ${(e.contenido||[e.extracto||'']).map(p=>`<p>${p}</p>`).join('')}
+      </div>
+      <div class="modal-actions">
+        ${e.pdf ? `<a class="dl-btn" href="${e.pdf}" download target="_blank">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;">
+            <path d="M8 2v9M4 8l4 4 4-4M2 14h12"/>
+          </svg>
+          Descargar PDF</a>` : ''}
+        <button class="ver-btn" onclick="compartir('${e.titulo.replace(/'/g,"\\'")}')">Compartir ↗</button>
+      </div>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) { if (e.target.id==='modal') closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; }
+
+function compartir(titulo) {
+  const url  = window.location.href;
+  const text = '✝ "' + titulo + '"\n\n' + url;
+  if (navigator.share) navigator.share({ title: titulo, text, url }).catch(()=>{});
+  else navigator.clipboard.writeText(text).then(() => showToast('✅ Link copiado — pégalo donde quieras'));
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-').map(Number);
+  const ms = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${day} ${ms[m-1]} ${y}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('site-toast');
+  t.textContent = msg;
+  t.style.transform = 'translateY(0)'; t.style.opacity = '1';
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.style.transform = 'translateY(60px)'; t.style.opacity = '0'; }, 3500);
+}
+
+loadData();
+</script>
+</body>
+</html>

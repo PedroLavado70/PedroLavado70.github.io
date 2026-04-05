@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Estudios · El Blog de Pedro Lavado</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0F0D0B;--sur:#181410;--sur2:#221E18;--sur3:#2A2420;--bdr:#2E2820;--gold:#C9A055;--gdim:#7A5F30;--glit:#E8C87A;--cream:#F0E4C5;--muted:#7A7068;--grn:#4CAF85;--gbg:#1A3D2C;--red:#E05A4A;--rbg:#3A1510;--blu:#5A8AE0;--bbg:#1A2540;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--cream);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:13px 26px;border-bottom:1px solid var(--bdr);background:var(--sur);position:sticky;top:0;z-index:50;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-cross{color:var(--gold);}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:0.06em;}
+.brand-sub{font-size:0.57rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
+.tbar-r{display:flex;gap:9px;align-items:center;}
+.nav-link{font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:1px solid var(--bdr);padding:6px 13px;border-radius:2px;transition:all 0.2s;}
+.nav-link:hover{color:var(--cream);border-color:var(--gdim);}
+.view-blog{color:var(--gold);border-color:var(--gdim);}
+.view-blog:hover{background:var(--gold);color:#0F0D0B;border-color:var(--gold);}
+.tabs{display:flex;border-bottom:1px solid var(--bdr);background:var(--sur);}
+.tab{font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;padding:11px 20px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif;}
+.tab:hover{color:var(--cream);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.panel{display:none;}.panel.active{display:block;}
+
+/* EDITOR */
+.ed-layout{display:grid;grid-template-columns:1fr 380px;min-height:calc(100vh - 94px);}
+.fp{padding:26px 30px;border-right:1px solid var(--bdr);overflow-y:auto;max-height:calc(100vh - 94px);}
+.op{display:flex;flex-direction:column;max-height:calc(100vh - 94px);}
+.prev-scroll{flex:1;overflow-y:auto;padding:20px 22px;}
+.code-sec{padding:12px 22px 18px;border-top:1px solid var(--bdr);}
+
+/* ARTICLES */
+.art-layout{padding:26px 30px;}
+.art-toolbar{display:flex;gap:9px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.srch{flex:1;min-width:160px;background:var(--sur2);border:1px solid var(--bdr);color:var(--cream);font-family:'Jost',sans-serif;font-size:0.82rem;padding:7px 11px;border-radius:2px 0 0 2px;outline:none;}
+.srch:focus{border-color:var(--gdim);}
+.fcat{background:var(--sur2);border:1px solid var(--bdr);border-left:none;color:var(--cream);font-family:'Jost',sans-serif;font-size:0.79rem;padding:7px 9px;outline:none;border-radius:0 2px 2px 0;}
+.art-tbl{width:100%;border-collapse:collapse;}
+.art-tbl th{font-size:0.57rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:8px 11px;text-align:left;border-bottom:1px solid var(--bdr);font-weight:400;}
+.art-tbl td{padding:10px 11px;border-bottom:1px solid var(--bdr);font-size:0.79rem;vertical-align:middle;}
+.art-tbl tr:hover td{background:var(--sur2);}
+.tdtitle{color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:0.96rem;}
+.tag-pill{display:inline-block;font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:rgba(201,160,85,0.1);color:var(--gold);border:1px solid var(--gdim);}
+.pdf-pill{display:inline-block;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:var(--gbg);color:var(--grn);border:1px solid var(--gbg);}
+.no-pdf{font-size:0.55rem;color:var(--muted);}
+.acts{display:flex;gap:5px;}
+.ab{font-size:0.57rem;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;cursor:pointer;border:none;font-family:'Jost',sans-serif;font-weight:500;transition:all 0.15s;}
+.ab-edit{background:var(--bbg);color:var(--blu);}.ab-edit:hover{background:var(--blu);color:#0F0D0B;}
+.ab-del{background:var(--rbg);color:var(--red);}.ab-del:hover{background:var(--red);color:#fff;}
+.ab-dup{background:var(--sur3);color:var(--muted);}.ab-dup:hover{color:var(--cream);}
+.no-art{text-align:center;padding:48px;color:var(--muted);font-size:0.82rem;line-height:1.8;}
+
+/* JSON EXPORT */
+.json-layout{padding:26px 30px;max-width:860px;}
+.json-box{background:var(--sur2);border:1px solid var(--bdr);border-radius:2px;padding:16px;font-family:monospace;font-size:0.71rem;line-height:1.65;color:#9A8A7A;white-space:pre-wrap;word-break:break-all;max-height:420px;overflow-y:auto;margin-bottom:14px;}
+.inst-box{background:var(--sur2);border:1px solid var(--bdr);border-radius:2px;padding:20px;margin-top:16px;}
+.inst-box h3{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:13px;}
+.ist{display:flex;gap:9px;margin-bottom:11px;font-size:0.79rem;color:var(--muted);line-height:1.6;align-items:flex-start;}
+.isn{width:19px;height:19px;border-radius:50%;background:var(--gold);color:#0F0D0B;font-size:0.6rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+code{color:var(--gold);font-size:0.75rem;}
+.warn{background:rgba(201,160,85,0.08);border:1px solid var(--gdim);border-radius:2px;padding:12px 16px;font-size:0.78rem;color:var(--gold);margin-bottom:16px;}
+.pdf-note{background:rgba(76,175,133,0.08);border:1px solid rgba(76,175,133,0.3);border-radius:2px;padding:12px 16px;font-size:0.78rem;color:var(--grn);margin-bottom:16px;}
+
+/* SHARED */
+.slabel{font-size:0.56rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.slabel::after{content:'';flex:1;height:1px;background:var(--bdr);}
+.field{margin-bottom:15px;}
+label{display:block;font-size:0.57rem;letter-spacing:0.17em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+input[type="text"],input[type="date"],input[type="number"],input[type="url"],select,textarea{width:100%;background:var(--sur2);border:1px solid var(--bdr);color:var(--cream);font-family:'Jost',sans-serif;font-size:0.83rem;font-weight:300;padding:8px 11px;border-radius:2px;outline:none;transition:border-color 0.2s;resize:vertical;}
+input:focus,select:focus,textarea:focus{border-color:var(--gdim);}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:0.45;}
+select option{background:var(--sur2);}
+textarea{line-height:1.7;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+.wc{font-size:0.56rem;color:var(--muted);margin-top:3px;text-align:right;}
+.btn{font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.13em;text-transform:uppercase;font-weight:500;padding:9px 17px;border-radius:2px;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-p{background:var(--gold);color:#0F0D0B;}.btn-p:hover{background:var(--glit);}
+.btn-s{background:var(--sur2);color:var(--cream);border:1px solid var(--bdr);}.btn-s:hover{border-color:var(--gdim);}
+.btn-d{background:var(--rbg);color:var(--red);border:1px solid var(--rbg);}.btn-d:hover{border-color:var(--red);}
+.btn-row{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.cpybtn{font-size:0.57rem;letter-spacing:0.11em;text-transform:uppercase;background:var(--gold);color:#0F0D0B;border:none;padding:4px 11px;border-radius:2px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;}
+.edit-notice{display:none;margin-top:9px;font-size:0.69rem;color:var(--gold);padding:7px 11px;background:rgba(201,160,85,0.08);border:1px solid var(--gdim);border-radius:2px;}
+
+/* PDF FIELD */
+.pdf-field-wrap{background:var(--sur3);border:1px solid var(--bdr);border-radius:2px;padding:12px 14px;}
+.pdf-field-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.pdf-tabs{display:flex;gap:6px;margin-bottom:10px;}
+.pdf-tab{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:2px;cursor:pointer;border:1px solid var(--bdr);background:none;color:var(--muted);font-family:'Jost',sans-serif;transition:all 0.2s;}
+.pdf-tab.active{background:var(--gold);color:#0F0D0B;border-color:var(--gold);}
+.pdf-hint{font-size:0.67rem;color:var(--muted);line-height:1.6;margin-top:6px;}
+
+/* PREVIEW */
+.prv-card{background:#FAF7F2;border-radius:2px;overflow:hidden;margin-bottom:12px;}
+.prv-img{width:100%;height:130px;object-fit:cover;display:block;}
+.prv-img-ph{width:100%;height:130px;background:#1A1612;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#B8955A;opacity:0.4;}
+.prv-body{padding:18px 20px;}
+.pv-cat{font-size:0.58rem;letter-spacing:0.19em;text-transform:uppercase;color:#B8955A;margin-bottom:7px;}
+.pv-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:#1A1612;margin-bottom:6px;line-height:1.3;}
+.pv-pasaje{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.85rem;color:#B8955A;margin-bottom:10px;}
+.pv-excerpt{font-size:0.8rem;line-height:1.8;color:#3D342C;margin-bottom:12px;}
+.pv-footer{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #E2D9CC;}
+.pv-date{font-size:0.62rem;color:#9A8A7A;letter-spacing:0.08em;text-transform:uppercase;}
+.pv-dl{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:white;background:#1A1612;padding:6px 12px;border-radius:1px;}
+.pv-empty{text-align:center;padding:28px 14px;color:var(--muted);font-size:0.79rem;line-height:1.8;}
+.clabel{font-size:0.56rem;letter-spacing:0.19em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+.cblock{background:var(--sur2);border:1px solid var(--bdr);border-radius:2px;padding:11px;font-family:monospace;font-size:0.67rem;line-height:1.6;color:#9A8A7A;white-space:pre-wrap;word-break:break-all;max-height:130px;overflow-y:auto;}
+.toast{position:fixed;bottom:16px;right:16px;padding:8px 15px;border-radius:2px;font-size:0.72rem;font-weight:500;letter-spacing:0.08em;transform:translateY(50px);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:840px){.ed-layout{grid-template-columns:1fr;}.op{max-height:none;}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-cross">✝</span>
+    <div>
+      <div class="brand-name">El Blog de Pedro Lavado</div>
+      <div class="brand-sub">Admin · Estudios Bíblicos</div>
+    </div>
+  </div>
+  <div class="tbar-r">
+    <span id="art-counter" style="font-size:0.62rem;color:var(--muted)">0 estudios</span>
+    <a href="admin.html" class="nav-link">Admin Devocionales</a>
+    <a href="estudios.html" class="view-blog nav-link" target="_blank">Ver estudios →</a>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('nuevo',this)">✝ Nuevo estudio</button>
+  <button class="tab" onclick="switchTab('lista',this)">Gestionar estudios</button>
+  <button class="tab" onclick="switchTab('exportar',this)">Exportar JSON</button>
+</div>
+
+<!-- TAB: NUEVO -->
+<div id="tab-nuevo" class="panel active">
+<div class="ed-layout">
+  <div class="fp">
+    <div class="slabel">Identificación</div>
+    <div class="frow3">
+      <div class="field">
+        <label>Fecha</label>
+        <input type="date" id="f-fecha" oninput="upPrev()">
+      </div>
+      <div class="field">
+        <label>Categoría</label>
+        <select id="f-cat" onchange="upPrev()">
+          <option value="Antiguo Testamento">Antiguo Testamento</option>
+          <option value="Nuevo Testamento">Nuevo Testamento</option>
+          <option value="Evangelios">Evangelios</option>
+          <option value="Epístolas">Epístolas</option>
+          <option value="Profetas">Profetas</option>
+          <option value="Doctrina">Doctrina</option>
+          <option value="Vida Cristiana">Vida Cristiana</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Páginas del PDF</label>
+        <input type="number" id="f-pags" placeholder="Ej: 12" min="1" oninput="upPrev()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Título del estudio</label>
+      <input type="text" id="f-tit" placeholder="El libro de Job: el sufrimiento y la soberanía de Dios..." oninput="upPrev()">
+    </div>
+
+    <div class="field">
+      <label>Pasaje bíblico principal</label>
+      <input type="text" id="f-pasaje" placeholder='Ej: Job 1:1 — 42:17' oninput="upPrev()">
+    </div>
+
+    <div class="field">
+      <label>Extracto / Descripción breve</label>
+      <textarea id="f-extracto" placeholder="Breve descripción del estudio que verán los visitantes en la tarjeta..." rows="2" oninput="upPrev();wc(this,'w0')"></textarea>
+      <div class="wc" id="w0">0 palabras</div>
+    </div>
+
+    <div class="slabel" style="margin-top:4px;">Contenido del estudio</div>
+    <div class="field">
+      <label>Párrafo 1 — Introducción</label>
+      <textarea id="f-p1" placeholder="Contexto histórico, autor, fecha..." rows="3" oninput="upPrev();wc(this,'w1')"></textarea>
+      <div class="wc" id="w1">0 palabras</div>
+    </div>
+    <div class="field">
+      <label>Párrafo 2 — Desarrollo</label>
+      <textarea id="f-p2" placeholder="Temas centrales, estructura del libro/pasaje..." rows="3" oninput="upPrev();wc(this,'w2')"></textarea>
+      <div class="wc" id="w2">0 palabras</div>
+    </div>
+    <div class="field">
+      <label>Párrafo 3 — Aplicación</label>
+      <textarea id="f-p3" placeholder="¿Qué nos enseña este pasaje para hoy?" rows="3" oninput="upPrev();wc(this,'w3')"></textarea>
+      <div class="wc" id="w3">0 palabras</div>
+    </div>
+
+    <div class="slabel" style="margin-top:4px;">Archivos</div>
+
+    <!-- PDF -->
+    <div class="field">
+      <div class="pdf-field-wrap">
+        <div class="pdf-field-label">📄 Archivo PDF</div>
+        <div class="pdf-tabs">
+          <button class="pdf-tab active" onclick="setPdfMode('url',this)">Link al PDF</button>
+          <button class="pdf-tab" onclick="setPdfMode('github',this)">Subido a GitHub</button>
+        </div>
+        <div id="pdf-url-mode">
+          <input type="url" id="f-pdf-url" placeholder="https://drive.google.com/... o cualquier URL directa al PDF" oninput="upPrev()">
+          <p class="pdf-hint">Puedes subir el PDF a Google Drive y usar el link de descarga directa.</p>
+        </div>
+        <div id="pdf-github-mode" style="display:none;">
+          <input type="text" id="f-pdf-github" placeholder="pdfs/nombre-del-estudio.pdf" oninput="upPrev()">
+          <p class="pdf-hint">Sube el PDF a la carpeta <code style="color:var(--gold)">pdfs/</code> de tu repositorio GitHub. Luego escribe aquí la ruta relativa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTADA -->
+    <div class="field">
+      <label>URL de imagen de portada</label>
+      <input type="url" id="f-portada" placeholder="https://... (imagen JPG o PNG de la portada)" oninput="upPrev()">
+      <p style="font-size:0.62rem;color:var(--muted);margin-top:4px;">Sube la imagen a GitHub en la carpeta <code style="color:var(--gold)">imagenes/</code> y usa la URL directa, o usa un link de Google Drive / Imgur.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="saveEstudio()">✝ Guardar estudio</button>
+      <button class="btn btn-s" onclick="fillEx()">Ejemplo</button>
+      <button class="btn btn-d" onclick="clearFrm()">Limpiar</button>
+    </div>
+    <div class="edit-notice" id="edit-notice">✏️ Editando estudio existente — al guardar se actualizará</div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="op">
+    <div class="prev-scroll">
+      <div class="slabel">Vista previa</div>
+      <div id="prv-box"><div class="pv-empty">✝<br><br>Completa el formulario<br>para ver la vista previa</div></div>
+    </div>
+    <div class="code-sec">
+      <div class="clabel"><span>Código del estudio</span><button class="cpybtn" onclick="cpyCur()">Copiar</button></div>
+      <div class="cblock" id="code-out">// Guarda el estudio para ver el código</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TAB: LISTA -->
+<div id="tab-lista" class="panel">
+<div class="art-layout">
+  <div class="art-toolbar">
+    <input class="srch" type="text" placeholder="Buscar por título o pasaje..." oninput="renderTbl()">
+    <select class="fcat" onchange="renderTbl()" id="flt-cat">
+      <option value="">Todas las categorías</option>
+      <option>Antiguo Testamento</option><option>Nuevo Testamento</option>
+      <option>Evangelios</option><option>Epístolas</option>
+      <option>Profetas</option><option>Doctrina</option>
+      <option>Vida Cristiana</option><option>Otro</option>
+    </select>
+    <span id="tbl-count" style="font-size:0.63rem;letter-spacing:0.11em;color:var(--muted);text-transform:uppercase;white-space:nowrap;"></span>
+  </div>
+  <table class="art-tbl">
+    <thead><tr><th>#</th><th>Fecha</th><th>Categoría</th><th>Título</th><th>Pasaje</th><th>PDF</th><th>Acciones</th></tr></thead>
+    <tbody id="art-tbody"><tr><td colspan="7"><div class="no-art">No hay estudios aún.<br>Crea tu primer estudio bíblico en "Nuevo estudio".</div></td></tr></tbody>
+  </table>
+</div>
+</div>
+
+<!-- TAB: EXPORTAR -->
+<div id="tab-exportar" class="panel">
+<div class="json-layout">
+  <div class="warn">⚠️ Cada vez que guardes un estudio nuevo o edites uno existente, descarga el JSON actualizado y súbelo a GitHub como <code>estudios.json</code>.</div>
+  <div class="pdf-note">📁 Los PDFs y las imágenes de portada súbelos a GitHub en las carpetas <code>pdfs/</code> e <code>imagenes/</code> dentro de tu repositorio. Ejemplo: <code>pdfs/estudio-genesis.pdf</code></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="slabel" style="margin:0;flex:1;">estudios.json — listo para subir a GitHub</div>
+    <div style="display:flex;gap:8px;margin-left:14px;">
+      <button class="cpybtn" onclick="cpyJSON()">Copiar JSON</button>
+      <button class="cpybtn" style="background:var(--gbg);color:var(--grn);border:1px solid var(--grn);" onclick="downloadJSON()">Descargar JSON</button>
+    </div>
+  </div>
+  <div class="json-box" id="json-out">// Aún no tienes estudios guardados.</div>
+  <div class="inst-box">
+    <h3>Estructura de archivos en GitHub</h3>
+    <div class="ist"><div class="isn">1</div><span>En tu repositorio crea las carpetas <code>pdfs/</code> e <code>imagenes/</code></span></div>
+    <div class="ist"><div class="isn">2</div><span>Sube cada PDF a <code>pdfs/nombre-estudio.pdf</code> y cada portada a <code>imagenes/portada-estudio.jpg</code></span></div>
+    <div class="ist"><div class="isn">3</div><span>En el campo PDF del admin escribe la ruta: <code>pdfs/nombre-estudio.pdf</code></span></div>
+    <div class="ist"><div class="isn">4</div><span>Descarga el <code>estudios.json</code> y súbelo a la raíz de tu repositorio</span></div>
+    <div class="ist"><div class="isn">5</div><span>Tu página <code>estudios.html</code> lo cargará automáticamente — link de descarga funcional</span></div>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let estudios = JSON.parse(localStorage.getItem('plblog_estudios')||'[]');
+let editId = null, curCode = '', nextId = 0, pdfMode = 'url';
+
+function computeNextId(){ nextId = estudios.length ? Math.max(...estudios.map(a=>a.id)) + 1 : 1; }
+computeNextId();
+function persist(){ localStorage.setItem('plblog_estudios', JSON.stringify(estudios)); computeNextId(); upCounter(); renderTbl(); buildJSON(); }
+function g(id){ return document.getElementById(id); }
+
+function switchTab(n,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  g('tab-'+n).classList.add('active'); btn.classList.add('active');
+  if(n==='lista') renderTbl();
+  if(n==='exportar') buildJSON();
+}
+
+function setPdfMode(mode, btn){
+  pdfMode = mode;
+  document.querySelectorAll('.pdf-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  g('pdf-url-mode').style.display    = mode==='url'    ? 'block' : 'none';
+  g('pdf-github-mode').style.display = mode==='github' ? 'block' : 'none';
+  upPrev();
+}
+
+function getPdfValue(){
+  if(pdfMode==='github'){
+    const v = (g('f-pdf-github').value||'').trim();
+    return v ? 'https://pericogithub70.github.io/' + v : '';
+  }
+  return (g('f-pdf-url').value||'').trim();
+}
+
+function wc(el,cid){ const w=el.value.trim().split(/\s+/).filter(x=>x).length; g(cid).textContent=w+(w===1?' palabra':' palabras'); }
+
+function upPrev(){
+  const tit  = g('f-tit').value.trim();
+  const cat  = g('f-cat').value;
+  const pas  = g('f-pasaje').value.trim();
+  const ext  = g('f-extracto').value.trim();
+  const port = g('f-portada').value.trim();
+  const pdf  = getPdfValue();
+  const fecha= g('f-fecha').value;
+
+  if(!tit&&!ext){ g('prv-box').innerHTML='<div class="pv-empty">✝<br><br>Completa el formulario<br>para ver la vista previa</div>'; return; }
+
+  g('prv-box').innerHTML = `
+    <div class="prv-card">
+      ${port
+        ? `<img class="prv-img" src="${port}" alt="${tit}" onerror="this.style.display='none'">`
+        : `<div class="prv-img-ph">✝</div>`}
+      <div class="prv-body">
+        <p class="pv-cat">✝ ${cat}</p>
+        <h3 class="pv-title">${tit||'Título del estudio'}</h3>
+        ${pas?`<p class="pv-pasaje">${pas}</p>`:''}
+        <p class="pv-excerpt">${ext||'Descripción del estudio...'}</p>
+        <div class="pv-footer">
+          <span class="pv-date">${fmtD(fecha)}</span>
+          ${pdf?`<span class="pv-dl">↓ Descargar PDF</span>`:'<span style="font-size:0.6rem;color:var(--muted)">Sin PDF</span>'}
+        </div>
+      </div>
+    </div>`;
+}
+
+function saveEstudio(){
+  const fecha = g('f-fecha').value;
+  const tit   = g('f-tit').value.trim();
+  const ext   = g('f-extracto').value.trim();
+  if(!fecha||!tit||!ext){ toast('Completa: fecha, título y extracto',true); return; }
+
+  const p1 = g('f-p1').value.trim(), p2 = g('f-p2').value.trim(), p3 = g('f-p3').value.trim();
+  const est = {
+    id: editId !== null ? editId : nextId,
+    fecha,
+    categoria: g('f-cat').value,
+    titulo: tit,
+    pasaje: g('f-pasaje').value.trim(),
+    extracto: ext,
+    contenido: [p1,p2,p3].filter(x=>x),
+    pdf: getPdfValue(),
+    portada: g('f-portada').value.trim(),
+    paginas: parseInt(g('f-pags').value)||null
+  };
+
+  if(editId !== null){
+    const i=estudios.findIndex(a=>a.id===editId);
+    if(i>-1) estudios[i]=est;
+    editId=null; g('edit-notice').style.display='none';
+    toast('✝ Estudio #'+est.id+' actualizado');
+  } else {
+    estudios.push(est);
+    toast('✝ Estudio #'+est.id+' guardado');
+  }
+  curCode = JSON.stringify(est,null,2);
+  g('code-out').textContent = curCode;
+  persist(); clearFrm(false);
+}
+
+function clearFrm(resetEdit=true){
+  ['f-tit','f-pasaje','f-extracto','f-p1','f-p2','f-p3','f-pdf-url','f-pdf-github','f-portada','f-pags'].forEach(id=>g(id).value='');
+  g('f-cat').value='Antiguo Testamento';
+  g('f-fecha').value=new Date().toISOString().split('T')[0];
+  ['w0','w1','w2','w3'].forEach(id=>g(id).textContent='0 palabras');
+  if(resetEdit){ editId=null; g('edit-notice').style.display='none'; }
+  upPrev();
+}
+
+function fillEx(){
+  g('f-fecha').value=new Date().toISOString().split('T')[0];
+  g('f-cat').value='Epístolas';
+  g('f-tit').value='Romanos: La justicia de Dios y la salvación por fe';
+  g('f-pasaje').value='Romanos 1:1 — 16:27';
+  g('f-extracto').value='Un estudio completo de la carta de Pablo a los romanos, considerada por muchos el resumen más profundo del evangelio en toda la Escritura.';
+  g('f-p1').value='La carta a los Romanos fue escrita por el apóstol Pablo alrededor del año 57 d.C., desde Corinto, mientras se preparaba para viajar a Jerusalén. Es la más extensa y sistemática de sus epístolas, y ha sido llamada "el evangelio en miniatura".';
+  g('f-p2').value='El argumento central de Romanos es que todos los seres humanos son pecadores (cap. 1-3), pero Dios proveyó justificación por gracia mediante la fe en Cristo (cap. 4-5). Los capítulos 6-8 exploran la vida en el Espíritu, y los capítulos 9-11 abordan el plan de Dios para Israel.';
+  g('f-p3').value='Los capítulos finales (12-16) presentan la ética cristiana como resultado lógico de la gracia recibida. "Por tanto, hermanos, os ruego por las misericordias de Dios, que presentéis vuestros cuerpos en sacrificio vivo..." (Ro 12:1).';
+  g('f-pdf-url').value='';
+  g('f-portada').value='';
+  g('f-pags').value='24';
+  ['f-extracto','f-p1','f-p2','f-p3'].forEach((fid,i)=>wc(g(fid),['w0','w1','w2','w3'][i]));
+  upPrev(); toast('Ejemplo cargado');
+}
+
+function cpyCur(){ if(!curCode){toast('Guarda un estudio primero',true);return;} navigator.clipboard.writeText(curCode).then(()=>toast('Código copiado')); }
+
+function renderTbl(){
+  const srch=(document.querySelector('.srch')||{value:''}).value.toLowerCase();
+  const fcat=(g('flt-cat')||{value:''}).value;
+  let f=estudios.filter(a=>{
+    const ms=!srch||(a.titulo.toLowerCase().includes(srch)||(a.pasaje||'').toLowerCase().includes(srch));
+    return ms&&(!fcat||a.categoria===fcat);
+  }).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  g('tbl-count').textContent=f.length+' resultado'+(f.length!==1?'s':'');
+  if(!f.length){ g('art-tbody').innerHTML='<tr><td colspan="7"><div class="no-art">Sin resultados.</div></td></tr>'; return; }
+  g('art-tbody').innerHTML=f.map(a=>`<tr>
+    <td style="font-size:0.71rem;color:var(--muted)">${a.id}</td>
+    <td style="font-size:0.71rem;color:var(--muted);white-space:nowrap">${fmtD(a.fecha)}</td>
+    <td><span class="tag-pill">${a.categoria}</span></td>
+    <td class="tdtitle">${a.titulo}</td>
+    <td style="font-size:0.71rem;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.pasaje||''}</td>
+    <td>${a.pdf?`<span class="pdf-pill">✓ PDF</span>`:`<span class="no-pdf">Sin PDF</span>`}</td>
+    <td><div class="acts">
+      <button class="ab ab-edit" onclick="editEst(${a.id})">✏️ Editar</button>
+      <button class="ab ab-dup" onclick="dupEst(${a.id})">Duplicar</button>
+      <button class="ab ab-del" onclick="delEst(${a.id})">Eliminar</button>
+    </div></td>
+  </tr>`).join('');
+}
+
+function fmtD(d){ if(!d)return''; const[y,m,dy]=d.split('-'); const ms=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']; return`${dy} ${ms[parseInt(m)-1]} ${y}`; }
+
+function editEst(id){
+  const a=estudios.find(x=>x.id===id); if(!a)return;
+  editId=id;
+  g('f-fecha').value=a.fecha; g('f-cat').value=a.categoria||'Antiguo Testamento';
+  g('f-tit').value=a.titulo; g('f-pasaje').value=a.pasaje||'';
+  g('f-extracto').value=a.extracto||'';
+  g('f-p1').value=(a.contenido||[])[0]||''; g('f-p2').value=(a.contenido||[])[1]||''; g('f-p3').value=(a.contenido||[])[2]||'';
+  g('f-portada').value=a.portada||''; g('f-pags').value=a.paginas||'';
+  // PDF
+  const pdf=a.pdf||'';
+  if(pdf.includes('pericogithub70.github.io/')){
+    setPdfMode('github', document.querySelectorAll('.pdf-tab')[1]);
+    g('f-pdf-github').value=pdf.replace('https://pericogithub70.github.io/','');
+  } else {
+    setPdfMode('url', document.querySelectorAll('.pdf-tab')[0]);
+    g('f-pdf-url').value=pdf;
+  }
+  ['f-extracto','f-p1','f-p2','f-p3'].forEach((fid,i)=>wc(g(fid),['w0','w1','w2','w3'][i]));
+  g('edit-notice').style.display='block'; upPrev();
+  switchTab('nuevo',document.querySelectorAll('.tab')[0]);
+  window.scrollTo(0,0); toast('✏️ Estudio #'+id+' cargado para editar');
+}
+
+function dupEst(id){
+  const a=estudios.find(x=>x.id===id); if(!a)return;
+  const dup={...a, id:nextId, fecha:new Date().toISOString().split('T')[0]};
+  estudios.push(dup); persist(); toast('Estudio duplicado como #'+dup.id);
+}
+
+function delEst(id){
+  if(!confirm('¿Eliminar estudio #'+id+'? No se puede deshacer.'))return;
+  estudios=estudios.filter(a=>a.id!==id); persist(); toast('Estudio eliminado');
+}
+
+function buildJSON(){
+  if(!estudios.length){ g('json-out').textContent='// Aún no tienes estudios guardados.'; return; }
+  const sorted=[...estudios].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  g('json-out').textContent=JSON.stringify(sorted,null,2);
+}
+
+function cpyJSON(){ buildJSON(); const txt=g('json-out').textContent; if(txt.startsWith('//')){toast('No tienes estudios aún',true);return;} navigator.clipboard.writeText(txt).then(()=>toast('JSON copiado')); }
+
+function downloadJSON(){
+  buildJSON();
+  const txt=g('json-out').textContent;
+  if(txt.startsWith('//')){toast('No tienes estudios aún',true);return;}
+  const a=document.createElement('a'); a.href='data:application/json;charset=utf-8,'+encodeURIComponent(txt); a.download='estudios.json'; a.click();
+  toast('✝ estudios.json descargado');
+}
+
+function upCounter(){ g('art-counter').textContent=estudios.length+' estudio'+(estudios.length!==1?'s':''); }
+
+function toast(msg,err=false){
+  const t=g('toast'); t.textContent=msg;
+  t.style.background=err?'var(--red)':'var(--grn)'; t.style.color=err?'#fff':'#0F0D0B';
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+g('f-fecha').value=new Date().toISOString().split('T')[0];
+upCounter(); renderTbl();
+</script>
+</body>
+</html>
